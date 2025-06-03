@@ -15,217 +15,63 @@
       </div>
 
       <div class="studentTable">
-        <div class="tableContent">
-          <div class="tableColumn">
-            <div class="tableHeader">
-              <span>Name</span>
-            </div>
-            <div class="tableCell">
+        <el-table :data="tableData" style="width: 100%" :stripe="true">
+          <el-table-column label="Name">
+            <template #default="scope">
               <div class="userInfo">
-                <div class="userAvatar"></div>
-                <span class="userName">Sophia Green</span>
+                <div :class="['userAvatar', scope.$index % 2 === 1 ? 'alternate' : '']"></div>
+                <span class="userName">{{ scope.row.name }}</span>
               </div>
-            </div>
-            <div class="tableCell alternate">
-              <div class="userInfo">
-                <div class="userAvatar alternate"></div>
-                <span class="userName">Liam Chen</span>
-              </div>
-            </div>
-            <div class="tableCell">
-              <div class="userInfo">
-                <div class="userAvatar"></div>
-                <span class="userName">Sophia Green</span>
-              </div>
-            </div>
-            <div class="tableCell alternate">
-              <div class="userInfo">
-                <div class="userAvatar alternate"></div>
-                <span class="userName">Liam Chen</span>
-              </div>
-            </div>
-            <div class="tableCell">
-              <div class="userInfo">
-                <div class="userAvatar"></div>
-                <span class="userName">Sophia Green</span>
-              </div>
-            </div>
-            <div class="tableCell alternate">
-              <div class="userInfo">
-                <div class="userAvatar alternate"></div>
-                <span class="userName">Liam Chen</span>
-              </div>
-            </div>
-          </div>
+            </template>
+          </el-table-column>
 
-          <div class="tableColumn">
-            <div class="tableHeader">
-              <span>Email</span>
-            </div>
-            <div class="tableCell">
-              <span class="emailText">sophia.green@email.edu</span>
-            </div>
-            <div class="tableCell alternate">
-              <span class="emailText">sophia.green@email.edu</span>
-            </div>
-            <div class="tableCell">
-              <span class="emailText">sophia.green@email.edu</span>
-            </div>
-            <div class="tableCell alternate">
-              <span class="emailText">sophia.green@email.edu</span>
-            </div>
-            <div class="tableCell">
-              <span class="emailText">sophia.green@email.edu</span>
-            </div>
-            <div class="tableCell alternate">
-              <span class="emailText">sophia.green@email.edu</span>
-            </div>
-          </div>
+          <el-table-column label="Email">
+            <template #default="scope">
+              <span class="emailText">{{ scope.row.email }}</span>
+            </template>
+          </el-table-column>
 
-          <div class="tableColumn">
-            <div class="tableHeader">
-              <span>Group</span>
-            </div>
-            <div class="tableCell">
+          <el-table-column label="Group">
+            <template #default="scope">
               <div class="groupSelect">
-                <span>Business</span>
+                <span>{{ scope.row.group }}</span>
                 <div class="selectIcon"></div>
               </div>
-            </div>
-            <div class="tableCell alternate">
-              <div class="groupSelect">
-                <span>Business</span>
-                <div class="selectIcon"></div>
-              </div>
-            </div>
-            <div class="tableCell">
-              <div class="groupSelect">
-                <span>Business</span>
-                <div class="selectIcon"></div>
-              </div>
-            </div>
-            <div class="tableCell alternate">
-              <div class="groupSelect">
-                <span>Business</span>
-                <div class="selectIcon"></div>
-              </div>
-            </div>
-            <div class="tableCell">
-              <div class="groupSelect">
-                <span>Business</span>
-                <div class="selectIcon"></div>
-              </div>
-            </div>
-            <div class="tableCell alternate">
-              <div class="groupSelect">
-                <span>Business</span>
-                <div class="selectIcon"></div>
-              </div>
-            </div>
-          </div>
+            </template>
+          </el-table-column>
 
-          <div class="tableColumn">
-            <div class="tableHeader">
-              <span>Last Active</span>
-            </div>
-            <div class="tableCell">
-              <span class="lastActiveText">5 hours ago</span>
-            </div>
-            <div class="tableCell alternate">
-              <span class="lastActiveText">5 hours ago</span>
-            </div>
-            <div class="tableCell">
-              <span class="lastActiveText">5 hours ago</span>
-            </div>
-            <div class="tableCell alternate">
-              <span class="lastActiveText">5 hours ago</span>
-            </div>
-            <div class="tableCell">
-              <span class="lastActiveText">5 hours ago</span>
-            </div>
-            <div class="tableCell alternate">
-              <span class="lastActiveText">5 hours ago</span>
-            </div>
-          </div>
+          <el-table-column label="Last Active">
+            <template #default="scope">
+              <span class="lastActiveText">{{ scope.row.lastActive }}</span>
+            </template>
+          </el-table-column>
 
-          <div class="tableColumn">
-            <div class="tableHeader">
-              <span>Interview Count</span>
-            </div>
-            <div class="tableCell">
-              <span class="countText">4</span>
-            </div>
-            <div class="tableCell alternate">
-              <span class="countText">7</span>
-            </div>
-            <div class="tableCell">
-              <span class="countText">8</span>
-            </div>
-            <div class="tableCell alternate">
-              <span class="countText">23</span>
-            </div>
-            <div class="tableCell">
-              <span class="countText">21</span>
-            </div>
-            <div class="tableCell alternate">
-              <span class="countText">21</span>
-            </div>
-          </div>
+          <el-table-column label="Interview Count">
+            <template #default="scope">
+              <span class="countText">{{ scope.row.interviewCount }}</span>
+            </template>
+          </el-table-column>
 
-          <div class="tableColumn">
-            <div class="tableHeader">
-              <span>Actions</span>
-            </div>
-            <div class="tableCell">
+          <el-table-column label="Actions">
+            <template #default>
               <span class="actionLink">Reset Password</span>
-            </div>
-            <div class="tableCell alternate">
-              <span class="actionLink">Reset Password</span>
-            </div>
-            <div class="tableCell">
-              <span class="actionLink">Reset Password</span>
-            </div>
-            <div class="tableCell alternate">
-              <span class="actionLink">Reset Password</span>
-            </div>
-            <div class="tableCell">
-              <span class="actionLink">Reset Password</span>
-            </div>
-            <div class="tableCell alternate">
-              <span class="actionLink">Reset Password</span>
-            </div>
-          </div>
-        </div>
+            </template>
+          </el-table-column>
+        </el-table>
 
         <div class="tablePagination">
           <div class="paginationInfo">
             <span>Showing</span>
-            <span class="boldText">1-4</span>
+            <span class="boldText">{{ (currentPage - 1) * pageSize + 1 }}-{{ Math.min(currentPage * pageSize, total)
+            }}</span>
             <span>of</span>
-            <span class="boldText">32</span>
+            <span class="boldText">{{ total }}</span>
             <span>students</span>
           </div>
 
-          <div class="paginationControls">
-            <button class="paginationButton">
-              <div class="arrowIcon prev"></div>
-            </button>
-            <button class="paginationButton active">
-              <span>1</span>
-            </button>
-            <button class="paginationButton">
-              <span>2</span>
-            </button>
-            <button class="paginationButton">
-              <span>3</span>
-            </button>
-            <button class="paginationButton">
-              <span>4</span>
-            </button>
-            <button class="paginationButton">
-              <div class="arrowIcon next"></div>
-            </button>
-          </div>
+          <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" :page-sizes="[10, 20, 30, 40]"
+            layout="prev, pager, next" :total="total" @size-change="handleSizeChange"
+            @current-change="handleCurrentChange" />
         </div>
       </div>
     </div>
@@ -233,21 +79,82 @@
 </template>
 
 <script setup>
-// Component logic can be added here
+import { ref } from 'vue';
+
+// 表格数据
+const tableData = ref([
+  {
+    name: 'Sophia Green',
+    email: 'sophia.green@email.edu',
+    group: 'Business',
+    lastActive: '5 hours ago',
+    interviewCount: 4
+  },
+  {
+    name: 'Liam Chen',
+    email: 'sophia.green@email.edu',
+    group: 'Business',
+    lastActive: '5 hours ago',
+    interviewCount: 7
+  },
+  {
+    name: 'Sophia Green',
+    email: 'sophia.green@email.edu',
+    group: 'Business',
+    lastActive: '5 hours ago',
+    interviewCount: 8
+  },
+  {
+    name: 'Liam Chen',
+    email: 'sophia.green@email.edu',
+    group: 'Business',
+    lastActive: '5 hours ago',
+    interviewCount: 23
+  },
+  {
+    name: 'Sophia Green',
+    email: 'sophia.green@email.edu',
+    group: 'Business',
+    lastActive: '5 hours ago',
+    interviewCount: 21
+  },
+  {
+    name: 'Liam Chen',
+    email: 'sophia.green@email.edu',
+    group: 'Business',
+    lastActive: '5 hours ago',
+    interviewCount: 21
+  },
+]);
+
+// 分页相关
+const currentPage = ref(1);
+const pageSize = ref(10);
+const total = ref(32);
+
+const handleSizeChange = (val) => {
+  pageSize.value = val;
+};
+
+const handleCurrentChange = (val) => {
+  currentPage.value = val;
+};
 </script>
 
 <style lang="scss" scoped>
 .studentPage {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   background-color: #F7F9FC;
   font-family: 'Inter', sans-serif;
-  padding: 24px 0;
   box-sizing: border-box;
 
   .contentContainer {
     max-width: 1200px;
     margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
     .pageHeader {
       display: flex;
@@ -318,149 +225,89 @@
       background-color: #FFFFFF;
       border-radius: 8px;
       box-shadow: 0px 4px 12px rgba(26, 77, 140, 0.08);
-      overflow: hidden;
+      overflow-y: auto;
+      padding: 32px 24px;
+      flex: 1;
+      height: fit-content;
 
-      .tableContent {
+      .userInfo {
         display: flex;
-        width: 100%;
+        align-items: center;
+        gap: 12px;
 
-        .tableColumn {
-          &:first-child {
-            width: 174px;
-          }
+        .userAvatar {
+          width: 32px;
+          height: 32px;
+          background-color: #F0C3A0;
+          border: 1px solid #E8ECF0;
+          border-radius: 50%;
 
-          &:nth-child(2) {
-            width: 227px;
-          }
-
-          &:nth-child(3) {
-            width: 198px;
-          }
-
-          &:nth-child(4) {
-            width: 166px;
-          }
-
-          &:nth-child(5) {
-            width: 174px;
-          }
-
-          &:last-child {
-            width: 213px;
-          }
-
-          .tableHeader {
-            height: 56px;
-            background-color: #F7F9FC;
-            display: flex;
-            align-items: center;
-
-            span {
-              font-size: 16px;
-              font-weight: 700;
-              line-height: 16px;
-              color: #1A4D8C;
-              margin-left: 12px;
-            }
-          }
-
-          .tableCell {
-            height: 56px;
-            background-color: #FFFFFF;
-            display: flex;
-            align-items: center;
-
-            &.alternate {
-              background-color: #F5F7FA;
-            }
-
-            .userInfo {
-              display: flex;
-              align-items: center;
-              gap: 12px;
-              margin-left: 12px;
-
-              .userAvatar {
-                width: 32px;
-                height: 32px;
-                background-color: #F0C3A0;
-                border: 1px solid #E8ECF0;
-                border-radius: 50%;
-
-                &.alternate {
-                  background-color: #A0C3F0;
-                }
-              }
-
-              .userName {
-                font-size: 16px;
-                font-weight: 700;
-                line-height: 19.36px;
-                color: #1F2D3D;
-              }
-            }
-
-            .emailText {
-              font-size: 16px;
-              font-weight: 400;
-              line-height: 19.36px;
-              color: #6B7B8F;
-              margin-left: 12px;
-            }
-
-            .groupSelect {
-              width: 173px;
-              height: 36px;
-              border: 1px solid #E8ECF0;
-              border-radius: 8px;
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              margin-left: 12px;
-
-              span {
-                font-size: 14px;
-                font-weight: 400;
-                line-height: 16.94px;
-                color: #6B7B8F;
-                margin-left: 12px;
-              }
-
-              .selectIcon {
-                width: 9.51px;
-                height: 5.71px;
-                background-color: #6B7B8F;
-                margin-right: 12px;
-                clip-path: polygon(0 0, 100% 0, 50% 100%);
-              }
-            }
-
-            .lastActiveText {
-              font-size: 16px;
-              font-weight: 400;
-              line-height: 19.36px;
-              color: #6B7B8F;
-              margin-left: 12px;
-            }
-
-            .countText {
-              font-size: 16px;
-              font-weight: 400;
-              line-height: 19.36px;
-              color: #6B7B8F;
-              margin-left: 12px;
-            }
-
-            .actionLink {
-              font-size: 16px;
-              font-weight: 400;
-              line-height: 16px;
-              color: #1A4D8C;
-              margin-left: 12px;
-              cursor: pointer;
-            }
+          &.alternate {
+            background-color: #A0C3F0;
           }
         }
+
+        .userName {
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 19.36px;
+          color: #1F2D3D;
+        }
+      }
+
+      .emailText {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 19.36px;
+        color: #6B7B8F;
+      }
+
+      .groupSelect {
+        width: 173px;
+        height: 36px;
+        border: 1px solid #E8ECF0;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        span {
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 16.94px;
+          color: #6B7B8F;
+          margin-left: 12px;
+        }
+
+        .selectIcon {
+          width: 9.51px;
+          height: 5.71px;
+          background-color: #6B7B8F;
+          margin-right: 12px;
+          clip-path: polygon(0 0, 100% 0, 50% 100%);
+        }
+      }
+
+      .lastActiveText {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 19.36px;
+        color: #6B7B8F;
+      }
+
+      .countText {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 19.36px;
+        color: #6B7B8F;
+      }
+
+      .actionLink {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 16px;
+        color: #1A4D8C;
+        cursor: pointer;
       }
 
       .tablePagination {
@@ -486,50 +333,13 @@
             color: #1A4D8C;
           }
         }
-
-        .paginationControls {
-          display: flex;
-          align-items: center;
-
-          .paginationButton {
-            width: 32px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-
-            &.active {
-              background-color: #F5F7FA;
-              border-radius: 4px;
-            }
-
-            span {
-              font-size: 16px;
-              font-weight: 400;
-              line-height: 19.36px;
-              color: #1A4D8C;
-            }
-
-            .arrowIcon {
-              width: 7px;
-              height: 12px;
-              background-color: #1A4D8C;
-
-              &.prev {
-                clip-path: polygon(100% 0, 0 50%, 100% 100%);
-              }
-
-              &.next {
-                clip-path: polygon(0 0, 100% 50%, 0 100%);
-              }
-            }
-          }
-        }
       }
     }
   }
+}
+
+::v-deep(.el-table th.el-table__cell) {
+  background-color: #F7F9FC;
+  padding: 18px 12px;
 }
 </style>

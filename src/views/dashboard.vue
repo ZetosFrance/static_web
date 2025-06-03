@@ -258,7 +258,6 @@ const handleResize = () => {
   min-height: 100%;
   background-color: #F7F9FC;
   font-family: 'Inter', sans-serif;
-  padding: 24px 0;
   box-sizing: border-box;
 
   .contentContainer {

@@ -78,7 +78,6 @@
     width: 100%;
     height: 520px;
     position: relative;
-    margin-top: -20px;
 
     .heroBackground {
       position: absolute;

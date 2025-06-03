@@ -203,15 +203,18 @@ const handleLinkedInLogin = () => {
   .loginContainer {
     width: 100%;
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .loginMain {
       width: 852px;
       height: 804px;
-      margin: 48px auto 0;
       background-color: #FFFFFF;
       border-radius: 12px;
       box-shadow: 0px 4px 24px 0px rgba(26, 77, 140, 0.12);
       display: flex;
+
       position: relative;
 
       .loginSidebar {

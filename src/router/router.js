@@ -50,6 +50,11 @@ export default [
         component: () => import("@/views/student.vue"),
         name: "student",
       },
+      {
+        path: "score",
+        component: () => import("@/views/score.vue"),
+        name: "score",
+      },
     ],
   },
   {

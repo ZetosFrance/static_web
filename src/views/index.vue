@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <Header />
-    <div class="indexContent">
+    <div :class="['indexContent', router.currentRoute.value.name === 'home' && 'negative']">
       <router-view />
     </div>
     <Footer />
@@ -15,6 +15,10 @@
 defineComponent({ name: "index" })
 // props
 const props = defineProps({})
+
+const router = useRouter()
+console.log(router, "router");
+
 
 </script>
 
@@ -33,6 +37,10 @@ const props = defineProps({})
     background-color: #F7F9FC;
     overflow-y: auto;
     // margin-bottom: 22px;
+
+    &.negative {
+      margin-top: -20px;
+    }
   }
 }
 </style>
