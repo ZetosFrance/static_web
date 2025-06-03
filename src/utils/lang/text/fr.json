@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "home": "首页",
+    "blog": "博客",
+    "about": "关于",
+    "contact": "联系"
+  },
+  "home": {
+    "welcome": "欢迎来到我的网站",
+    "description": "这是一个使用 Vue 3 和 i18n 构建的多语言网站",
+    "features": {
+      "title": "主要特点",
+      "list": {
+        "1": "支持多语言切换",
+        "2": "响应式设计",
+        "3": "用户友好界面"
+      }
+    }
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "发生错误",
+    "success": "操作成功",
+    "buttons": {
+      "submit": "提交",
+      "cancel": "取消",
+      "save": "保存"
+    }
+  }
+}

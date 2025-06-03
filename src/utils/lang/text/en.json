@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "home": {
+    "welcome": "Welcome to my website",
+    "description": "This is a multilingual website built with Vue 3 and i18n",
+    "features": {
+      "title": "Key Features",
+      "list": {
+        "1": "Multi-language support",
+        "2": "Responsive design",
+        "3": "User-friendly interface"
+      }
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Operation successful",
+    "buttons": {
+      "submit": "Submit",
+      "cancel": "Cancel",
+      "save": "Save"
+    }
+  }
+}
