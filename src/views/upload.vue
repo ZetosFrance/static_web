@@ -8,95 +8,169 @@
             <div class="uploadStepNumber uploadStepActive">
               <span>1</span>
             </div>
-            <div class="uploadStepLabel uploadStepLabelActive">Upload</div>
+            <div class="uploadStepLabel uploadStepLabelActive">Télécharger</div>
           </div>
           <div class="uploadStepDivider"></div>
           <div class="uploadStepItem">
             <div class="uploadStepNumber">
               <span>2</span>
             </div>
-            <div class="uploadStepLabel">Review</div>
+            <div class="uploadStepLabel">Révision</div>
           </div>
           <div class="uploadStepDivider"></div>
           <div class="uploadStepItem">
             <div class="uploadStepNumber">
               <span>3</span>
             </div>
-            <div class="uploadStepLabel">Interview</div>
+            <div class="uploadStepLabel">Entretien</div>
           </div>
         </div>
       </div>
 
       <div class="uploadContent">
         <div class="uploadTitleGroup">
-          <h1 class="uploadTitle">Upload Your Documents</h1>
+          <h1 class="uploadTitle">Téléversez vos documents</h1>
           <p class="uploadDescription">
-            Add your CV、cover letter or job description to help Prepwise personalize your interview experience.
+            Ajoutez votre CV, lettre de motivation ou description de poste pour que Prepwise personnalise votre
+            expérience d’entretien.
           </p>
         </div>
 
-        <div class="uploadDropzone">
+        <div class="uploadDropzone" @click="triggerFileInput" @dragover.prevent="onDragOver"
+          @dragleave.prevent="onDragLeave" @drop.prevent="onDrop" :class="{ 'dragover': isDragging }">
+          <input type="file" ref="fileInput" style="display: none" @change="handleFileUpload" accept=".pdf,.docx"
+            multiple />
           <div class="uploadDropzoneContent">
             <div class="uploadDropzoneIcon">
-              <!-- Document upload icon placeholder -->
+              <FileTextOutlined style="font-size: 28px; color: #1A4D8C;" />
             </div>
             <div class="uploadDropzoneText">
-              <div class="uploadDropzoneTitle">Drag & drop to upload</div>
-              <div class="uploadDropzoneSubtitle">or browse files (PDF, DOCX)</div>
+              <div class="uploadDropzoneTitle">Glisser-déposer pour télécharger</div>
+              <div class="uploadDropzoneSubtitle">ou parcourir les fichiers (PDF, DOCX)</div>
             </div>
           </div>
         </div>
 
-        <div class="uploadFileList">
-          <div class="uploadFileItem">
+        <div class="uploadFileList" v-if="fileList.length > 0">
+          <div v-for="(file, index) in fileList" :key="index" class="uploadFileItem"
+            :class="{ 'uploadFileProgress': file.uploading }">
             <div class="uploadFileInfo">
               <div class="uploadFileIcon">
-                <!-- Document icon placeholder -->
+                <FileTextOutlined style="font-size: 18px; color: #6B7B8F;" />
               </div>
-              <div class="uploadFileName">CV .docx</div>
+              <div class="uploadFileName">{{ file.name }}</div>
             </div>
-            <div class="uploadFileDelete">
-              <!-- Delete icon placeholder -->
+            <div class="uploadFileDelete" @click="removeFile(index)">
+              <CloseOutlined style="font-size: 14px; color: #6B7B8F;" />
             </div>
-          </div>
-
-          <div class="uploadFileItem">
-            <div class="uploadFileInfo">
-              <div class="uploadFileIcon">
-                <!-- Document icon placeholder -->
-              </div>
-              <div class="uploadFileName">Cover Letter .docx</div>
-            </div>
-            <div class="uploadFileDelete">
-              <!-- Delete icon placeholder -->
-            </div>
-          </div>
-
-          <div class="uploadFileProgress">
-            <div class="uploadFileItem">
-              <div class="uploadFileInfo">
-                <div class="uploadFileIcon">
-                  <!-- Document icon placeholder -->
-                </div>
-                <div class="uploadFileName">Job Description .docx</div>
-              </div>
-              <div class="uploadFileDelete">
-                <!-- Delete icon placeholder -->
-              </div>
-            </div>
-            <div class="uploadFileProgressBar"></div>
+            <div class="uploadFileProgressBar" v-if="file.uploading" :style="{ width: file.progress + '%' }"></div>
           </div>
         </div>
 
-        <button class="uploadNextButton">Next</button>
+        <button class="uploadNextButton" :disabled="fileList.length === 0" @click="gouploadlist">Suivant</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-// Import components
-// The Header and Footer components are assumed to be globally registered
+import { FileTextOutlined, CloseOutlined } from '@ant-design/icons-vue';
+
+// File management
+const fileInput = ref(null);
+const fileList = ref([]);
+const isDragging = ref(false);
+
+// Trigger file input when dropzone is clicked
+const triggerFileInput = () => {
+  fileInput.value.click();
+};
+
+// Handle file selection from input
+const handleFileUpload = (event) => {
+  const files = event.target.files;
+  if (files.length) {
+    uploadFiles(files);
+  }
+  // Reset input to allow selecting the same file again
+  event.target.value = '';
+};
+
+// Handle drag events
+const onDragOver = () => {
+  isDragging.value = true;
+};
+
+const onDragLeave = () => {
+  isDragging.value = false;
+};
+
+const onDrop = (event) => {
+  isDragging.value = false;
+  const files = event.dataTransfer.files;
+  if (files.length) {
+    uploadFiles(files);
+  }
+};
+
+// Upload files with progress simulation
+const uploadFiles = (files) => {
+  Array.from(files).forEach(file => {
+    // Add file to list with initial progress
+    const fileObj = {
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      uploading: true,
+      progress: 0,
+      file: file
+    };
+
+    fileList.value.push(fileObj);
+    const fileIndex = fileList.value.length - 1;
+
+    // Simulate upload progress
+    simulateUploadProgress(fileIndex);
+  });
+};
+
+// Simulate file upload progress
+const simulateUploadProgress = (fileIndex) => {
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress += Math.floor(Math.random() * 10) + 5;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(interval);
+      // Mark upload as complete after a short delay
+      setTimeout(() => {
+        if (fileList.value[fileIndex]) {
+          fileList.value[fileIndex].uploading = false;
+          fileList.value[fileIndex].progress = 100;
+        }
+      }, 500);
+    }
+
+    if (fileList.value[fileIndex]) {
+      fileList.value[fileIndex].progress = progress;
+    } else {
+      clearInterval(interval);
+    }
+  }, 300);
+};
+
+// Remove file from list
+const removeFile = (index) => {
+  fileList.value.splice(index, 1);
+};
+
+const router = useRouter()
+
+function gouploadlist() {
+  if (fileList.value.length > 0) {
+    router.push("/uploadlist")
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -219,6 +293,13 @@
         align-items: center;
         justify-content: center;
         margin-bottom: 24px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &.dragover {
+          background-color: #EAF0F7;
+          border-color: #17B0A7;
+        }
 
         .uploadDropzoneContent {
           display: flex;
@@ -229,8 +310,6 @@
           .uploadDropzoneIcon {
             width: 28.5px;
             height: 38px;
-            background-color: #1A4D8C;
-            /* Placeholder for the actual icon */
           }
 
           .uploadDropzoneText {
@@ -264,6 +343,7 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
+          position: relative;
 
           .uploadFileInfo {
             display: flex;
@@ -273,8 +353,6 @@
             .uploadFileIcon {
               width: 18px;
               height: 24px;
-              background-color: #6B7B8F;
-              /* Placeholder for the actual icon */
             }
 
             .uploadFileName {
@@ -288,23 +366,25 @@
           .uploadFileDelete {
             width: 18px;
             height: 18px;
-            background-color: #CED4DA;
-            /* Placeholder for delete icon */
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
+            z-index: 1;
+          }
+
+          .uploadFileProgressBar {
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            height: 2px;
+            background-color: #17B0A7;
+            transition: width 0.3s ease;
           }
         }
 
         .uploadFileProgress {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-
-          .uploadFileProgressBar {
-            width: 646px;
-            height: 2px;
-            background-color: #17B0A7;
-            margin-left: 32px;
-          }
+          padding-bottom: 10px;
         }
       }
 
@@ -322,6 +402,11 @@
         display: block;
         margin: 0 auto;
         box-shadow: 0px 2px 4px 0px rgba(26, 77, 140, 0.1);
+
+        &:disabled {
+          background-color: #B3C2D8;
+          cursor: not-allowed;
+        }
       }
     }
   }

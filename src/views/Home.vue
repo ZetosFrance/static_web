@@ -9,18 +9,17 @@
       </div>
       <div class="heroContent">
         <div class="heroTextContainer">
-          <h1 class="heroTitle">Train Smarter. Interview Better.</h1>
+          <h1 class="heroTitle">{{ $t("KEY_HOME_TEXT1") }}</h1>
           <p class="heroDescription">
-            Prepwise is your AI-powered practice partner for real-world job interviews.
-            Get instant, friendly feedback and track your progress over time.
+            {{ $t("KEY_HOME_TEXT2") }}
           </p>
         </div>
         <button class="heroButton">
-          <div class="heroButtonContent">
+          <div class="heroButtonContent" @click="goUpload">
             <div class="heroButtonIcon">
               <div class="heroButtonIconSvg"></div>
             </div>
-            <span>Start Interview Simulation</span>
+            <span>{{ $t("KEY_HOME_TEXT3") }}</span>
           </div>
         </button>
       </div>
@@ -30,31 +29,31 @@
     <div class="featuresSection">
       <div class="featureCard">
         <div class="featureIconContainer">
-          <div class="featureIcon featureIconFeedback"></div>
+          <div class=" featureIconFeedback"></div>
         </div>
-        <h3 class="featureTitle">AI Practice & Feedback</h3>
+        <h3 class="featureTitle">{{ $t("KEY_HOME_TEXT4") }}</h3>
         <p class="featureDescription">
-          Experience realistic interviews with instant, actionable feedback to help you grow confidently.
+          {{ $t("KEY_HOME_TEXT5") }}
         </p>
       </div>
 
       <div class="featureCard">
         <div class="featureIconContainer">
-          <div class="featureIcon featureIconProgress"></div>
+          <div class=" featureIconProgress"></div>
         </div>
-        <h3 class="featureTitle">Track Your Progress</h3>
+        <h3 class="featureTitle">{{ $t("KEY_HOME_TEXT6") }}</h3>
         <p class="featureDescription">
-          Visual dashboards show your strengths and areas to improve, so you always know where you stand.
+          {{ $t("KEY_HOME_TEXT7") }}
         </p>
       </div>
 
       <div class="featureCard">
         <div class="featureIconContainer">
-          <div class="featureIcon featureIconSimulation"></div>
+          <div class=" featureIconSimulation"></div>
         </div>
-        <h3 class="featureTitle">Real-World Simulation</h3>
+        <h3 class="featureTitle">{{ $t("KEY_HOME_TEXT8") }}</h3>
         <p class="featureDescription">
-          Practise in a lifelike interview environment to build your confidence before the real thing.
+          {{ $t("KEY_HOME_TEXT9") }}
         </p>
       </div>
     </div>
@@ -62,6 +61,11 @@
 </template>
 
 <script setup>
+const router = useRouter()
+
+function goUpload() {
+  router.push("/upload")
+}
 </script>
 
 <style lang="scss" scoped>
@@ -90,7 +94,10 @@
       .heroBackgroundImage {
         width: 100%;
         height: 100%;
-        background-color: #1A4D8C;
+        background: url('../assets/images/home.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
         /* Placeholder for the actual image */
       }
 
@@ -102,6 +109,8 @@
         height: 100%;
         background-color: #1A4D8C;
         opacity: 0.4;
+        z-index: 1;
+
       }
     }
 
@@ -143,7 +152,7 @@
       }
 
       .heroButton {
-        width: 257px;
+        width: fit-content;
         height: 56px;
         background-color: #17B0A7;
         border-radius: 40px;
@@ -163,9 +172,12 @@
             height: 18px;
 
             .heroButtonIconSvg {
-              width: 13.5px;
-              height: 15.75px;
-              background-color: #FFFFFF;
+              width: 15px;
+              height: 17px;
+              background: url('../assets/images/home/play.png');
+              background-size: cover;
+              background-position: center;
+              background-repeat: no-repeat;
               /* Placeholder for SVG icon */
             }
           }
@@ -189,6 +201,7 @@
     justify-content: center;
     margin-top: -80px;
     padding: 0 120px;
+    z-index: 2;
 
     .featureCard {
       width: 288px;
@@ -213,24 +226,35 @@
         align-items: center;
         margin-bottom: 16px;
 
-        .featureIcon {
-          width: 28px;
-          height: 28px;
 
-          &.featureIconFeedback {
-            background-color: #17B0A7;
-            /* Placeholder for icon */
-          }
+        .featureIconFeedback {
+          background: url('../assets/images/home/bot.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          width: 30px;
+          height: 24px;
+          /* Placeholder for icon */
+        }
 
-          &.featureIconProgress {
-            background-color: #3CB371;
-            /* Placeholder for icon */
-          }
+        .featureIconProgress {
+          background: url('../assets/images/home/progress.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          width: 24px;
+          height: 22px;
+          /* Placeholder for icon */
+        }
 
-          &.featureIconSimulation {
-            background-color: #4F6FE5;
-            /* Placeholder for icon */
-          }
+        .featureIconSimulation {
+          background: url('../assets/images/home/member.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          /* Placeholder for icon */
+          width: 30px;
+          height: 24px;
         }
       }
 

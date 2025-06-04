@@ -4,21 +4,21 @@
       <div class="reviewHeader">
         <div class="reviewIcon">
           <!-- Document icon placeholder -->
-          <div class="iconPlaceholder"></div>
+          <FileTextOutlined style="font-size: 24px; color: #1A4D8C;" />
         </div>
-        <h1 class="reviewTitle">CV & Cover Letter Review</h1>
+        <h1 class="reviewTitle">Révision CV & lettre de motivation</h1>
       </div>
 
       <div class="reviewNav">
         <div class="navTabs">
           <div class="navTab" :class="{ navTabActive: activeTab === 'cv' }" @click="activeTab = 'cv'">
-            <span class="tabText" :class="{ tabActive: activeTab === 'cv', tabInactive: activeTab !== 'cv' }">CV
-              review</span>
+            <span class="tabText" :class="{ tabActive: activeTab === 'cv', tabInactive: activeTab !== 'cv' }">Révision
+              CV</span>
           </div>
           <div class="navTab" :class="{ navTabActive: activeTab === 'letter' }" @click="activeTab = 'letter'">
             <span class="tabText"
-              :class="{ tabActive: activeTab === 'letter', tabInactive: activeTab !== 'letter' }">Cover letter
-              review</span>
+              :class="{ tabActive: activeTab === 'letter', tabInactive: activeTab !== 'letter' }">Révision lettre de
+              motivation</span>
           </div>
         </div>
       </div>
@@ -26,79 +26,78 @@
       <!-- Cover Letter Content -->
       <div v-if="activeTab === 'letter'" class="letterContent">
         <div class="letterGreeting">
-          Dear Recruiter,
+          Cher recruteur,
         </div>
 
         <div class="letterParagraph">
           <div class="paragraphText">
-            I am writing to express my
-            <span class="highlightedText">interest in the Marketing Analyst position at Acme Corp.</span>
-            <!-- Highlight icon placeholder -->
-            <el-tooltip class="item" effect="dark" content="Overused phrase: try to differentiate your introduction"
+            Je vous écris pour exprimer
+            <a-tooltip title="Phrase trop utilisée : essayez de rendre votre introduction plus originale."
               placement="bottom">
-              <div class="highlightIcon"></div>
-            </el-tooltip>
+              <div class="highlightIcon">
+                <ExclamationCircleFilled style="color: #FF9D5C;font-size: 18px;" />
+              </div>
+            </a-tooltip> mon intérêt pour le poste d’analyste marketing chez Acme Corp.
           </div>
-          <!-- <div class="tooltip">
-            <div class="tooltipPointer">
-              <div class="pointerPlaceholder"></div>
-            </div>
-            <div class="tooltipContent">
-              <span class="tooltipText">Overused phrase: try to differentiate your introduction</span>
-            </div>
-          </div> -->
         </div>
 
         <div class="letterParagraph">
           <div class="paragraphText">
-            In my CV, I have listed achievements, but did not include quantifiable impact.
-            <!-- Highlight icon placeholder -->
-            <div class="highlightIcon"></div>
+            Dans mon précédent poste
+            <div class="highlightIcon">
+              <img :src="flash" alt="">
+            </div> , j’ai mené diverses missions, comme la coordination de campagnes et la réalisation
+            d'études de marché. Je pense que mes compétences seraient un atout pour votre équipe .
+            <a-tooltip title="Phrase trop utilisée : essayez de rendre votre introduction plus originale."
+              placement="bottom">
+              <div class="highlightIcon">
+                <ExclamationCircleFilled style="color: #FF9D5C;font-size: 18px;" />
+              </div>
+            </a-tooltip>
           </div>
         </div>
 
-
         <div class="letterParagraph">
           <div class="paragraphText">
-            My previous role
-            <span class="highlightedText">involved various tasks</span>, such as coordinating campaigns and conducting
-            market research. I believe my skills would be a great fit for your team
-            <span class="highlightedText">.</span>
-            <!-- Highlight icon placeholder -->
-            <div class="highlightIcon"></div>
-            <!-- Highlight icon placeholder -->
-            <div class="highlightIcon"></div>
+            Dans mon CV, j’ai mentionné des réalisations, mais sans indiquer d’impact chiffré.
+            <a-tooltip title="Phrase trop utilisée : essayez de rendre votre introduction plus originale."
+              placement="bottom">
+              <div class="highlightIcon">
+                <ExclamationCircleFilled style="color: #FF9D5C;font-size: 18px;" />
+              </div>
+            </a-tooltip>
           </div>
         </div>
 
         <div class="letterSignature">
-          <div class="signatureText">Thank you for considering my application.</div>
-          <div class="signatureText">Sincerely</div>
-          <div class="signatureText">Jamie Lee</div>
+          <div class="signatureText">Merci d’avoir examiné ma candidature.</div>
+          <div class="signatureText">Cordialement</div>
+          <div class="signatureText">Alex Taylor</div>
         </div>
       </div>
 
       <!-- CV Content -->
       <div v-if="activeTab === 'cv'" class="cvContent">
         <div class="cvTitle">
-          CV Review – Alex Taylor (with bullet points)
+          Révision de CV – Alex Taylor (avec des puces)
         </div>
 
         <div class="cvSection">
           <div class="sectionHeader">
             <div class="sectionIcon">
               <!-- Success icon placeholder -->
-              <div class="successIconPlaceholder"></div>
+              <div class="successIconPlaceholder">
+                <CheckCircleFilled style="color: #17B0A7;font-size: 18px;" />
+              </div>
             </div>
-            <span class="sectionLabel">Strengths</span>
+            <span class="sectionLabel">Points forts</span>
           </div>
           <div class="sectionContent">
-            <p class="sectionText">Visually appealing design with a professional headshot and modern layout.</p>
-            <p class="sectionText">Clear, concise summary outlining career goals, relevant skills, and enthusiasm.</p>
-            <p class="sectionText">Relevant experience through two marketing internships and leadership in student
-              government.</p>
-            <p class="sectionText">Strong education section with GPA and honors included.</p>
-            <p class="sectionText">Well-chosen skills such as digital marketing tools and communication.</p>
+            <p class="sectionText">Design attrayant avec photo professionnelle et mise en page moderne. Résumé clair et
+              concis présentant les objectifs de carrière, les compétences clés et la motivation. Expérience pertinente
+              avec deux stages en marketing et un rôle de leader dans le gouvernement étudiant. Section éducation solide
+              incluant le GPA et les distinctions. Compétences bien choisies, notamment les outils de marketing digital
+              et la communication.</p>
           </div>
         </div>
 
@@ -106,16 +105,17 @@
           <div class="sectionHeader">
             <div class="sectionIcon">
               <!-- Warning icon placeholder -->
-              <div class="warningIconPlaceholder"></div>
+              <div class="warningIconPlaceholder">
+                <ExclamationCircleFilled style="color: #FF9D5C;font-size: 18px;" />
+              </div>
             </div>
-            <span class="sectionLabel">Areas for Improvement</span>
+            <span class="sectionLabel">Axes d’amélioration</span>
           </div>
           <div class="sectionContent">
-            <p class="sectionText">Multiple typos and spelling errors (e.g., "solying," "oronented," "initiâives").</p>
-            <p class="sectionText">Inaccurate or incomplete details, such as "Graduated: May 204" instead of 2024.</p>
-            <p class="sectionText">Inconsistent formatting and punctuation in bullets and section alignment.</p>
-            <p class="sectionText">Minor software name errors (e.g., "Cariva" should be "Canva," "Googe" → "Google").
-            </p>
+            <p class="sectionText">Plusieurs fautes de frappe et d’orthographe (ex. : « solying », « oronented », «
+              initiâives »). Détails incorrects ou incomplets, comme « Graduated : May 204 » au lieu de 2024. Formatage
+              et ponctuation incohérents dans les listes à puces et l’alignement des sections. Petites erreurs dans les
+              noms de logiciels (ex. : « Cariva » au lieu de « Canva », « Googe » au lieu de « Google »).</p>
           </div>
         </div>
 
@@ -123,30 +123,33 @@
           <div class="sectionHeader">
             <div class="sectionIcon">
               <!-- Success icon placeholder -->
-              <div class="successIconPlaceholder"></div>
+              <div class="successIconPlaceholder">
+                <CheckCircleFilled style="color: #17B0A7;font-size: 18px;" />
+              </div>
             </div>
-            <span class="sectionLabel">Overall</span>
+            <span class="sectionLabel">Globalement</span>
           </div>
           <div class="sectionContent">
-            <p class="sectionText">A strong, entry-level CV with solid content and a professional look, but it needs
-              proofreading and polishing to reflect the candidate's attention to detail.</p>
+            <p class="sectionText">Un CV solide pour un profil débutant, avec un contenu pertinent et un aspect
+              professionnel, mais qui nécessite une relecture et une finition pour mieux refléter le souci du détail du
+              candidat.</p>
           </div>
         </div>
       </div>
 
       <div class="reviewActions">
-        <button class="actionButton uploadButton">
+        <button class="actionButton uploadButton" @click="goUpload">
           <div class="buttonContent">
             <!-- Upload icon placeholder -->
-            <div class="buttonIcon"></div>
-            <span class="buttonText">Upload New Document</span>
+            <img :src="upload" alt="">
+            <span class="buttonText">Télécharger un nouveau document</span>
           </div>
         </button>
         <button class="actionButton regenerateButton">
           <div class="buttonContent">
             <!-- Regenerate icon placeholder -->
-            <div class="buttonIcon"></div>
-            <span class="buttonText">Regenerate Review</span>
+            <img :src="reload" alt="">
+            <span class="buttonText" style="color: #1A4D8C;">Regénérer la Révision</span>
           </div>
         </button>
       </div>
@@ -156,10 +159,9 @@
       <div class="insightsSection">
         <div class="sectionHeader">
           <div class="headerIcon">
-            <!-- Insights icon placeholder -->
             <div class="iconPlaceholder"></div>
           </div>
-          <h2 class="sectionTitle">Automated Review Insights</h2>
+          <h2 class="sectionTitle">Analyse automatisée</h2>
         </div>
 
         <div class="insightsList">
@@ -167,12 +169,15 @@
             <div class="insightHeader">
               <div class="insightIcon">
                 <!-- Warning icon placeholder -->
-                <div class="warningIconPlaceholder"></div>
+                <div class="warningIconPlaceholder">
+                  <img :src="flash" alt="">
+
+                </div>
               </div>
-              <span class="insightLabel">Clarity Issue:</span>
+              <span class="insightLabel">Problème de clarté:</span>
             </div>
             <div class="insightContent">
-              <p class="insightText">Phrases are too vague; include specific examples and details.</p>
+              <p class="insightText">Les phrases sont trop vagues ; ajoutez des exemples et des détails précis.</p>
             </div>
           </div>
 
@@ -180,12 +185,15 @@
             <div class="insightHeader">
               <div class="insightIcon">
                 <!-- Warning icon placeholder -->
-                <div class="warningIconPlaceholder"></div>
+                <div class="warningIconPlaceholder">
+
+                  <img :src="ruler" alt="">
+                </div>
               </div>
-              <span class="insightLabel">Impact Missing:</span>
+              <span class="insightLabel">Manque d’impact:</span>
             </div>
             <div class="insightContent">
-              <p class="insightText">Your CV lacks quantifiable achievements; add numbers/results.</p>
+              <p class="insightText">Votre CV manque de résultats chiffrés ; ajoutez des chiffres et des résultats.</p>
             </div>
           </div>
 
@@ -193,12 +201,16 @@
             <div class="insightHeader">
               <div class="insightIcon">
                 <!-- Warning icon placeholder -->
-                <div class="warningIconPlaceholder"></div>
+                <div class="warningIconPlaceholder">
+
+                  <ExclamationCircleFilled style="color: #FF9D5C;font-size: 18px;" />
+                </div>
+
               </div>
-              <span class="insightLabel">Repetitive Language:</span>
+              <span class="insightLabel">Langage répétitif:</span>
             </div>
             <div class="insightContent">
-              <p class="insightText">Avoid overused intro phrases; make your opening unique.</p>
+              <p class="insightText">Évitez les phrases d’intro trop utilisées ; rendez votre ouverture unique.</p>
             </div>
           </div>
 
@@ -206,12 +218,14 @@
             <div class="insightHeader">
               <div class="insightIcon">
                 <!-- Success icon placeholder -->
-                <div class="successIconPlaceholder"></div>
+                <div class="successIconPlaceholder">
+                  <CheckOutlined style="color: #17B0A7;font-size: 18px;" />
+                </div>
               </div>
-              <span class="insightLabel">Formatting:</span>
+              <span class="insightLabel">Mise en forme:</span>
             </div>
             <div class="insightContent">
-              <p class="insightText">Structure and layout are clear and easy to read.</p>
+              <p class="insightText">La structure et la mise en page sont claires et faciles à lire.</p>
             </div>
           </div>
         </div>
@@ -223,21 +237,26 @@
             <!-- Suggestions icon placeholder -->
             <div class="iconPlaceholder"></div>
           </div>
-          <h2 class="sectionTitle">Suggestions for Improvement</h2>
+          <h2 class="sectionTitle">Suggestions d’amélioration</h2>
         </div>
 
         <div class="suggestionsList">
           <div class="suggestionItem">
-            <p class="suggestionText">Replace generic phrases with unique, role-specific language.</p>
+            <p class="suggestionText">
+              Remplacez les phrases génériques par un <span>langage précis et adapté au poste.</span></p>
           </div>
           <div class="suggestionItem">
-            <p class="suggestionText">Add specific measurable results for each experience.</p>
+            <p class="suggestionText">
+              Ajoutez des <span>résultats mesurables précis</span> pour chaque expérience.</p>
           </div>
           <div class="suggestionItem">
-            <p class="suggestionText">Use active verbs to clearly convey your contributions.</p>
+            <p class="suggestionText">
+              Utilisez des <span>verbes d’action</span> pour exprimer clairement vos contributions.</p>
           </div>
           <div class="suggestionItem">
-            <p class="suggestionText">Briefly mention how your skills align with the company's goals.</p>
+            <p class="suggestionText">
+              Mentionnez brièvement <span>comment vos compétences s’alignent</span> avec les objectifs de l’entreprise.
+            </p>
           </div>
         </div>
       </div>
@@ -248,10 +267,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { getAssetsFile } from "@/utils/getAssets"
+
+const flash = getAssetsFile("flash.png", "letter")
+const ruler = getAssetsFile("ruler.png", "letter")
+const upload = getAssetsFile("upload.png", "letter")
+const reload = getAssetsFile("reload.png", "letter")
 
 // State to track active tab
 const activeTab = ref('letter'); // Default to 'letter' tab
+
+const router = useRouter()
+
+function goUpload() {
+  router.push("/upload")
+}
 </script>
 
 <style lang="scss" scoped>
@@ -262,7 +292,6 @@ const activeTab = ref('letter'); // Default to 'letter' tab
   font-family: 'Inter', sans-serif;
   display: flex;
   justify-content: center;
-  padding: 24px 120px;
   box-sizing: border-box;
   gap: 24px;
 
@@ -332,6 +361,7 @@ const activeTab = ref('letter'); // Default to 'letter' tab
             font-size: 16px;
             line-height: 1.21em;
             padding: 7px 0;
+            font-family: 'Inter', sans-serif;
 
             &.tabInactive {
               font-weight: 400;
@@ -351,7 +381,7 @@ const activeTab = ref('letter'); // Default to 'letter' tab
       background-color: #F5F7FA;
       border: 1px solid #E8ECF0;
       border-radius: 8px;
-      padding: 56px 24px;
+      padding: 56px 22px;
       margin-bottom: 24px;
       position: relative;
 
@@ -370,9 +400,10 @@ const activeTab = ref('letter'); // Default to 'letter' tab
         .paragraphText {
           font-weight: 400;
           font-size: 16px;
-          line-height: 1.5em;
+          line-height: 24px;
           color: #1F2D3D;
           position: relative;
+          letter-spacing: 0;
 
           .highlightedText {
             background-color: rgba(255, 157, 92, 0.2);
@@ -383,9 +414,6 @@ const activeTab = ref('letter'); // Default to 'letter' tab
             display: inline-block;
             width: 18px;
             height: 18px;
-            background-color: #FF9D5C;
-            position: absolute;
-            margin-left: 4px;
             /* Icon placeholder */
           }
         }
@@ -478,14 +506,12 @@ const activeTab = ref('letter'); // Default to 'letter' tab
             .warningIconPlaceholder {
               width: 18px;
               height: 18px;
-              background-color: #FF9D5C;
               /* Warning icon placeholder */
             }
 
             .successIconPlaceholder {
               width: 18px;
               height: 18px;
-              background-color: #3CB371;
               /* Success icon placeholder */
             }
           }
@@ -595,7 +621,7 @@ const activeTab = ref('letter'); // Default to 'letter' tab
         .iconPlaceholder {
           width: 24px;
           height: 24px;
-          background-color: #17B0A7;
+          background: url("../assets/images/letter/search.png") no-repeat center center;
           /* Icon placeholder */
         }
       }
@@ -634,16 +660,30 @@ const activeTab = ref('letter'); // Default to 'letter' tab
             justify-content: center;
 
             .warningIconPlaceholder {
-              width: 18px;
-              height: 18px;
-              background-color: #FF9D5C;
+              width: 32px;
+              height: 32px;
+              background-color: #FFF5EE;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              img {
+                width: 16px;
+                height: auto;
+              }
+
               /* Warning icon placeholder */
             }
 
             .successIconPlaceholder {
-              width: 20px;
-              height: 20px;
-              background-color: #3CB371;
+              width: 32px;
+              height: 32px;
+              background-color: #F1FCFA;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
               /* Success icon placeholder */
             }
           }
@@ -725,6 +765,10 @@ const activeTab = ref('letter'); // Default to 'letter' tab
           line-height: 1.5em;
           color: #1F2D3D;
           margin: 0;
+
+          span {
+            color: #17B0A7;
+          }
         }
       }
     }

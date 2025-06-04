@@ -55,6 +55,11 @@ export default [
         component: () => import("@/views/score.vue"),
         name: "score",
       },
+      {
+        path: "interviewFinish",
+        component: () => import("@/views/interviewFinish.vue"),
+        name: "interviewFinish",
+      },
     ],
   },
   {

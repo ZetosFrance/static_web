@@ -3,75 +3,51 @@
     <div class="contentContainer">
       <div class="pageHeader">
         <div class="headerInfo">
-          <h1 class="pageTitle">Student Management</h1>
+          <h1 class="pageTitle">Gestion d'étudiants</h1>
           <p class="pageDescription">Monitor and manage student accounts</p>
         </div>
         <button class="addStudentButton">
-          <div class="buttonIcon">
-            <div class="iconPlaceholder"></div>
-          </div>
+          <img :src="invite" alt="">
           <span>Add Student</span>
         </button>
       </div>
 
       <div class="studentTable">
-        <el-table :data="tableData" style="width: 100%" :stripe="true">
-          <el-table-column label="Name">
-            <template #default="scope">
+        <a-table :dataSource="tableData" :columns="columns" :pagination="false" :rowKey="record => record.email"
+          :rowClassName="(record, index) => index % 2 === 0 ? 'evenRow' : 'oddRow'">
+          <template #bodyCell="{ column, record }">
+            <template v-if="column.key === 'name'">
               <div class="userInfo">
-                <div :class="['userAvatar', scope.$index % 2 === 1 ? 'alternate' : '']"></div>
-                <span class="userName">{{ scope.row.name }}</span>
+                <div :class="['userAvatar', tableData.indexOf(record) % 2 === 1 ? 'alternate' : '']"></div>
+                <span class="userName">{{ record.name }}</span>
               </div>
             </template>
-          </el-table-column>
 
-          <el-table-column label="Email">
-            <template #default="scope">
-              <span class="emailText">{{ scope.row.email }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column label="Group">
-            <template #default="scope">
+            <template v-if="column.key === 'group'">
               <div class="groupSelect">
-                <span>{{ scope.row.group }}</span>
+                <span>{{ record.group }}</span>
                 <div class="selectIcon"></div>
               </div>
             </template>
-          </el-table-column>
 
-          <el-table-column label="Last Active">
-            <template #default="scope">
-              <span class="lastActiveText">{{ scope.row.lastActive }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column label="Interview Count">
-            <template #default="scope">
-              <span class="countText">{{ scope.row.interviewCount }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column label="Actions">
-            <template #default>
+            <template v-if="column.key === 'actions'">
               <span class="actionLink">Reset Password</span>
             </template>
-          </el-table-column>
-        </el-table>
+          </template>
+        </a-table>
 
         <div class="tablePagination">
           <div class="paginationInfo">
             <span>Showing</span>
-            <span class="boldText">{{ (currentPage - 1) * pageSize + 1 }}-{{ Math.min(currentPage * pageSize, total)
-            }}</span>
+            <span class="boldText">{{ (current - 1) * pageSize + 1 }}-{{ Math.min(current * pageSize, total)
+              }}</span>
             <span>of</span>
             <span class="boldText">{{ total }}</span>
             <span>students</span>
           </div>
 
-          <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize" :page-sizes="[10, 20, 30, 40]"
-            layout="prev, pager, next" :total="total" @size-change="handleSizeChange"
-            @current-change="handleCurrentChange" />
+          <a-pagination v-model:current="current" v-model:pageSize="pageSize" :total="total"
+            @change="handleCurrentChange" @showSizeChange="handleSizeChange" />
         </div>
       </div>
     </div>
@@ -79,7 +55,40 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { getAssetsFile } from "@/utils/getAssets"
+
+// Table columns
+const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
+  },
+  {
+    title: 'Group',
+    dataIndex: 'group',
+    key: 'group',
+  },
+  {
+    title: 'Last Active',
+    dataIndex: 'lastActive',
+    key: 'lastActive',
+  },
+  {
+    title: 'Interview Count',
+    dataIndex: 'interviewCount',
+    key: 'interviewCount',
+  },
+  {
+    title: 'Actions',
+    key: 'actions',
+  },
+];
 
 // 表格数据
 const tableData = ref([
@@ -128,17 +137,20 @@ const tableData = ref([
 ]);
 
 // 分页相关
-const currentPage = ref(1);
+const current = ref(1);
 const pageSize = ref(10);
 const total = ref(32);
 
-const handleSizeChange = (val) => {
-  pageSize.value = val;
+const handleSizeChange = (page, size) => {
+  pageSize.value = size;
 };
 
-const handleCurrentChange = (val) => {
-  currentPage.value = val;
+const handleCurrentChange = (page) => {
+  current.value = page;
 };
+
+const invite = getAssetsFile("invite.png", "dashboard")
+
 </script>
 
 <style lang="scss" scoped>
@@ -196,21 +208,6 @@ const handleCurrentChange = (val) => {
         box-shadow: 0px 2px 4px rgba(26, 77, 140, 0.1);
         cursor: pointer;
 
-        .buttonIcon {
-          width: 18px;
-          height: 14.4px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          .iconPlaceholder {
-            width: 18px;
-            height: 14.4px;
-            background-color: #FFFFFF;
-            border-radius: 2px;
-          }
-        }
-
         span {
           font-size: 16px;
           font-weight: 400;
@@ -229,6 +226,37 @@ const handleCurrentChange = (val) => {
       padding: 32px 24px;
       flex: 1;
       height: fit-content;
+
+      :deep(.ant-table) {
+        background: transparent;
+
+        .ant-table-thead>tr>th {
+          background: transparent;
+          border-bottom: none;
+          padding: 12px;
+          color: #1A4D8C;
+          background-color: #F7F9FC;
+          font-weight: 700;
+          font-size: 16px;
+        }
+
+        .ant-table-tbody>tr>td {
+          border-bottom: none;
+          padding: 12px;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 1.21em;
+          color: #1F2D3D;
+        }
+
+        .ant-table-tbody>tr.oddRow>td {
+          background-color: #F5F7FA;
+        }
+
+        .ant-table-tbody>tr.evenRow>td {
+          background-color: #FFFFFF;
+        }
+      }
 
       .userInfo {
         display: flex;
@@ -338,8 +366,20 @@ const handleCurrentChange = (val) => {
   }
 }
 
-::v-deep(.el-table th.el-table__cell) {
-  background-color: #F7F9FC;
-  padding: 18px 12px;
+::v-deep(.ant-table-wrapper .ant-table-thead>tr>th) {
+  &::before {
+    display: none;
+  }
+}
+
+::v-deep(.ant-pagination .ant-pagination-item-active) {
+  background-color: #F5F7FA;
+  color: #1A4D8C;
+  border: none;
+
+  a {
+    color: #1A4D8C;
+    font-weight: 700;
+  }
 }
 </style>

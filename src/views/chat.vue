@@ -6,8 +6,7 @@
           <div class="chatHeader">
             <div class="userSelectorContainer">
               <div class="userSelector">
-                <div class="userOption" :class="{ active: activeUser === 'interviewer' }"
-                  @click="setActiveUser('interviewer')">
+                <div class="userOption">
                   <div class="userAvatar">
                     <!-- Interviewer avatar placeholder -->
                     <div class="avatarPlaceholder interviewer"></div>
@@ -16,25 +15,25 @@
                     <div class="labelWrapper">
                       <div class="labelIcon">
                         <!-- User icon placeholder -->
-                        <div class="iconPlaceholder"></div>
+                        <div class="iconPlaceholder interviewer"></div>
                       </div>
-                      <span class="labelText">Interviewer</span>
+                      <span class="labelText">{{ $t("KEY_CHAT_TEXT7") }}</span>
                     </div>
                   </div>
                 </div>
 
-                <div class="userOption" :class="{ active: activeUser === 'you' }" @click="setActiveUser('you')">
+                <div class="userOption">
                   <div class="userAvatar">
                     <!-- User avatar placeholder -->
                     <div class="avatarPlaceholder user"></div>
                   </div>
-                  <div class="userLabel">
+                  <div class="userLabel user">
                     <div class="labelWrapper">
                       <div class="labelIcon">
                         <!-- User icon placeholder -->
                         <div class="iconPlaceholder"></div>
                       </div>
-                      <span class="labelText">You</span>
+                      <span class="labelText">{{ $t("KEY_CHAT_TEXT6") }}</span>
                     </div>
                   </div>
                 </div>
@@ -42,64 +41,15 @@
 
               <div class="chatMessages">
                 <!-- Interviewer message -->
-                <div class="messageRow interviewer">
+                <div v-for="(message, index) in messages" :key="index" :class="['messageRow', message.sender]">
                   <div class="messageAvatar">
                     <div class="avatarBorder">
                       <!-- Interviewer avatar placeholder -->
-                      <div class="avatarPlaceholder interviewer"></div>
+                      <div class="avatarPlaceholder" :class="message.sender"></div>
                     </div>
                   </div>
                   <div class="messageContent">
-                    <p class="messageText">Hi Alex, hope you're doing great! Are you ready to start the interview?</p>
-                  </div>
-                </div>
-
-                <!-- User message -->
-                <div class="messageRow user">
-                  <div class="messageContent">
-                    <p class="messageText">Yes</p>
-                  </div>
-                  <div class="messageAvatar">
-                    <div class="avatarBorder">
-                      <!-- User avatar placeholder -->
-                      <div class="avatarPlaceholder user"></div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Interviewer message -->
-                <div class="messageRow interviewer">
-                  <div class="messageAvatar">
-                    <div class="avatarBorder">
-                      <!-- Interviewer avatar placeholder -->
-                      <div class="avatarPlaceholder interviewer"></div>
-                    </div>
-                  </div>
-                  <div class="messageContent">
-                    <p class="messageText">
-                      Hi Alex, I see that you've applied for the position of Marketing Associate. I'm Lukas Schneider,
-                      Marketing Manager at Horizon Brands. I've been here for a few years leading digital campaigns, I'm
-                      going to run the interview today. It should last between 45 and 60 minutes. If you're ok we can
-                      then
-                      start. Can you please begin with introducing yourself?
-                    </p>
-                  </div>
-                </div>
-                <div class="messageRow interviewer">
-                  <div class="messageAvatar">
-                    <div class="avatarBorder">
-                      <!-- Interviewer avatar placeholder -->
-                      <div class="avatarPlaceholder interviewer"></div>
-                    </div>
-                  </div>
-                  <div class="messageContent">
-                    <p class="messageText">
-                      Hi Alex, I see that you've applied for the position of Marketing Associate. I'm Lukas Schneider,
-                      Marketing Manager at Horizon Brands. I've been here for a few years leading digital campaigns, I'm
-                      going to run the interview today. It should last between 45 and 60 minutes. If you're ok we can
-                      then
-                      start. Can you please begin with introducing yourself?
-                    </p>
+                    <p class="messageText">{{ message.text }}</p>
                   </div>
                 </div>
               </div>
@@ -109,22 +59,22 @@
             <div class="questionSection">
               <div class="questionHeader">
                 <div class="questionTag">
-                  Behavioral
+                  {{ $t("KEY_CHAT_TEXT1") }}
                 </div>
-                <h2 class="questionText">Tell me about a time you worked successfully in a team. What was your approach?
+                <h2 class="questionText">{{ $t("KEY_CHAT_TEXT2") }}
                 </h2>
               </div>
 
               <div class="responseArea">
-                <textarea class="responseInput" v-model="chatMessages"
-                  placeholder="Type your response here..."></textarea>
+                <textarea class="responseInput" v-model="userInput" placeholder="Type your response here..."
+                  @keyup.enter="sendMessage"></textarea>
                 <div class="responseActions">
                   <button class="recordButton">
                     <div class="buttonContent">
                       <div class="buttonIcon">
                         <div class="iconPlaceholder"></div>
                       </div>
-                      <span class="buttonText">Record your answer</span>
+                      <span class="buttonText">{{ $t("KEY_CHAT_TEXT3") }}</span>
                     </div>
                   </button>
                 </div>
@@ -134,8 +84,8 @@
 
           </div>
 
-          <button class="submitButton" :class="{ active: chatMessages.trim().length > 0 }">
-            Submit Answer
+          <button class="submitButton" :class="{ active: userInput.trim().length > 0 }" @click="sendMessage">
+            {{ $t("KEY_CHAT_TEXT5") }}
           </button>
         </div>
       </div>
@@ -144,14 +94,38 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
-const activeUser = ref('interviewer');
-const chatMessages = ref("")
-
-const setActiveUser = (user) => {
-  activeUser.value = user;
+const userInput = ref("");
+const messages = ref([]);
+const interviewerResponses = {
+  initial: "Salut Alex, j’espère que tu vas bien ! Es-tu prêt à commencer l’entretien ?",
+  followUp: "Bonjour Alex, je vois que tu as postulé pour le poste de Marketing Associate. Je suis Lukas Schneider, responsable marketing chez Horizon Brands. Je suis ici depuis quelques années, en charge des campagnes digitales, et je vais mener l’entretien aujourd’hui. Cela devrait durer entre 45 et 60 minutes. Si tu es d’accord, nous pouvons commencer. Peux-tu te présenter, s’il te plaît ?"
 };
+const sendMessage = () => {
+  if (!userInput.value.trim()) return;
+
+  messages.value.push({
+    sender: 'user',
+    text: userInput.value.trim()
+  });
+  if (messages.value.length === 2) {
+    setTimeout(() => {
+      messages.value.push({
+        sender: 'interviewer',
+        text: interviewerResponses.followUp
+      });
+    }, 1000);
+  }
+  userInput.value = "";
+};
+
+onMounted(() => {
+  setTimeout(() => {
+    messages.value.push({
+      sender: 'interviewer',
+      text: interviewerResponses.initial
+    });
+  }, 500);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -242,12 +216,14 @@ const setActiveUser = (user) => {
                   height: 100%;
 
                   &.interviewer {
-                    background-color: #808080;
+                    background: url("@/assets/images/chat/interviewer.png") no-repeat;
+                    background-size: cover;
                     /* Placeholder for interviewer image */
                   }
 
                   &.user {
-                    background-color: #A0A0A0;
+                    background: url("@/assets/images/chat/user.png") no-repeat;
+                    background-size: cover;
                     /* Placeholder for user image */
                   }
                 }
@@ -263,6 +239,10 @@ const setActiveUser = (user) => {
                 padding: 5px 8px;
                 min-width: 59px;
 
+                &.user {
+                  background-color: #17B0A7;
+                }
+
                 .labelWrapper {
                   display: flex;
                   flex-direction: row;
@@ -270,16 +250,22 @@ const setActiveUser = (user) => {
                   gap: 8px;
 
                   .labelIcon {
-                    width: 11.375px;
-                    height: 13px;
+                    width: 12px;
+                    height: 14px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
 
                     .iconPlaceholder {
-                      width: 11.375px;
-                      height: 13px;
-                      background-color: #FFFFFF;
+                      width: 12px;
+                      height: 14px;
+                      background: url("@/assets/images/chat/userIcon.png") no-repeat;
+                      background-size: cover;
+
+                      &.interviewer {
+                        background: url("@/assets/images/chat/interviewerIcon.png") no-repeat;
+                        background-size: cover;
+                      }
                     }
                   }
 
@@ -314,6 +300,14 @@ const setActiveUser = (user) => {
               &.user {
                 flex-direction: row-reverse;
                 align-self: flex-end;
+
+                .messageContent {
+                  background-color: #fff;
+
+                  .messageText {
+                    color: #1F2D3D;
+                  }
+                }
               }
 
               .messageAvatar {
@@ -335,12 +329,14 @@ const setActiveUser = (user) => {
                     margin-left: -1px;
 
                     &.interviewer {
-                      background-color: #808080;
+                      background: url("@/assets/images/chat/interviewer.png") no-repeat;
+                      background-size: cover;
                       /* Placeholder for interviewer image */
                     }
 
                     &.user {
-                      background-color: #A0A0A0;
+                      background: url("@/assets/images/chat/user.png") no-repeat;
+                      background-size: cover;
                       /* Placeholder for user image */
                     }
                   }
@@ -437,7 +433,7 @@ const setActiveUser = (user) => {
               right: 16px;
 
               .recordButton {
-                width: 190px;
+                width: fit-content;
                 height: 40px;
                 border-radius: 40px;
                 border: 1px solid #17B0A7;
@@ -461,9 +457,10 @@ const setActiveUser = (user) => {
                     align-items: center;
 
                     .iconPlaceholder {
-                      width: 12.375px;
+                      width: 13px;
                       height: 18px;
-                      background-color: #17B0A7;
+                      background: url("@/assets/images/chat/microphone.png") no-repeat;
+                      background-size: cover;
                     }
                   }
 

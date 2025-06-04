@@ -8,8 +8,8 @@ const messages = {
 
 const i18n = createI18n({
   globalInjection: true,
-  locale: localStorage.getItem("lang") || "en-US",
-  fallbackLocale: "fr-FR",
+  locale: localStorage.getItem("lang") || "fr-FR",
+  fallbackLocale: "en-US",
   messages,
 })
 

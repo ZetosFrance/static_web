@@ -10,8 +10,8 @@
           </div>
           <div class="loginSidebarContent">
             <div class="loginSidebarText">
-              <h1 class="loginSidebarTitle">Join 50,000+ students preparing smarter</h1>
-              <p class="loginSidebarDescription">Empower your next interview with PrepWise's AI-driven tools.</p>
+              <h1 class="loginSidebarTitle">{{ $t("KEY_LOGIN_TEXT1") }}</h1>
+              <p class="loginSidebarDescription">{{ $t("KEY_LOGIN_TEXT2") }}</p>
             </div>
           </div>
         </section>
@@ -20,24 +20,22 @@
             <div class="loginLogo">
               <div class="loginLogoIcon">
                 <!-- Logo placeholder with background color -->
-                <div class="loginLogoIconBg"></div>
-                <div class="loginLogoIconShape"></div>
-                <div class="loginLogoIconRect"></div>
+                <img :src="logo" alt="">
               </div>
-              <div class="loginLogoText">PrepWise</div>
+              <div class="loginLogoText">{{ $t("KEY_HEAD_TEXT1") }}</div>
             </div>
             <nav class="loginNav">
               <div class="loginNavButtons">
                 <div class="loginNavGroup">
                   <button :class="['loginNavButton', { 'loginNavButtonActive': activeForm === 'login' }]"
                     @click="switchForm('login')">
-                    Login
+                    {{ $t("KEY_LOGIN_TEXT3") }}
                   </button>
                 </div>
                 <div class="loginNavGroup">
                   <button :class="['loginNavButton', { 'loginNavButtonActive': activeForm === 'register' }]"
                     @click="switchForm('register')">
-                    Register
+                    {{ $t("KEY_LOGIN_TEXT4") }}
                   </button>
                 </div>
               </div>
@@ -49,16 +47,17 @@
               <div class="loginFormGroup">
                 <label class="loginFormLabel">Email</label>
                 <div class="loginFormInput">
-                  <input type="email" placeholder="Please enter" v-model="loginForm.email" />
+                  <input type="email" placeholder="Email" v-model="loginForm.email" />
                 </div>
               </div>
               <div class="loginFormGroup">
-                <label class="loginFormLabel">Password</label>
+                <label class="loginFormLabel">{{ $t("KEY_LOGIN_TEXT6") }}</label>
                 <div class="loginFormInput">
-                  <input :type="showLoginPassword ? 'text' : 'password'" placeholder="Please enter"
+                  <input :type="showLoginPassword ? 'text' : 'password'" placeholder="Mot de passe"
                     v-model="loginForm.password" />
                   <div class="loginFormInputIcon" @click="showLoginPassword = !showLoginPassword">
-                    <!-- Eye icon placeholder -->
+                    <EyeOutlined v-if="showLoginPassword" />
+                    <EyeInvisibleOutlined v-else />
                   </div>
                 </div>
               </div>
@@ -66,31 +65,35 @@
                 <label class="loginFormCheckbox">
                   <div :class="['loginFormCheckboxInput', { 'loginFormCheckboxInputActive': loginForm.rememberMe }]"
                     @click="loginForm.rememberMe = !loginForm.rememberMe"></div>
-                  <span>Remember me</span>
+                  <span>{{ $t("KEY_LOGIN_TEXT7") }}</span>
                 </label>
-                <span class="loginFormForgot">Forgot password?</span>
+                <span class="loginFormForgot">{{ $t("KEY_LOGIN_TEXT8") }}</span>
               </div>
-              <button type="submit" class="loginFormSubmit">Login</button>
+              <button type="submit" class="loginFormSubmit"
+                :class="{ 'loginFormSubmitActive': loginForm.email && loginForm.password }" @click="handleLogin">Se
+                connecter</button>
               <div class="loginFormDivider">
                 <div class="loginFormDividerLine"></div>
-                <div class="loginFormDividerText">or</div>
+                <div class="loginFormDividerText">{{ $t("KEY_LOGIN_TEXT11") }}</div>
                 <div class="loginFormDividerLine"></div>
               </div>
               <div class="loginFormSocial">
                 <button type="button" class="loginFormSocialButton" @click="handleGoogleLogin">
                   <div class="loginFormSocialButtonContent">
-                    <div class="loginFormSocialIcon loginFormSocialIconGoogle">
+                    <div class="loginFormSocialIcon">
+                      <img :src="google" alt="">
                       <!-- Google icon placeholder -->
                     </div>
-                    <span>Continue with Google</span>
+                    <span>{{ $t("KEY_LOGIN_TEXT9") }}</span>
                   </div>
                 </button>
                 <button type="button" class="loginFormSocialButton" @click="handleLinkedInLogin">
                   <div class="loginFormSocialButtonContent">
-                    <div class="loginFormSocialIcon loginFormSocialIconLinkedin">
+                    <div class="loginFormSocialIcon">
+                      <LinkedinFilled style="font-size: 18px; color: #0B66C1;" />
                       <!-- LinkedIn icon placeholder -->
                     </div>
-                    <span>Continue with LinkedIn</span>
+                    <span>{{ $t("KEY_LOGIN_TEXT10") }}</span>
                   </div>
                 </button>
               </div>
@@ -99,9 +102,9 @@
             <!-- Register Form -->
             <form class="loginForm" v-if="activeForm === 'register'" @submit.prevent="handleRegister">
               <div class="loginFormGroup">
-                <label class="loginFormLabel">User name</label>
+                <label class="loginFormLabel">{{ $t("KEY_LOGIN_TEXT15") }}</label>
                 <div class="loginFormInput">
-                  <input type="text" placeholder="Please enter" v-model="registerForm.username" />
+                  <input type="text" placeholder="Nom d’utilisateur" v-model="registerForm.username" />
                 </div>
               </div>
               <div class="loginFormGroup">
@@ -111,22 +114,24 @@
                 </div>
               </div>
               <div class="loginFormGroup">
-                <label class="loginFormLabel">Password</label>
+                <label class="loginFormLabel">{{ $t("KEY_LOGIN_TEXT15") }}</label>
                 <div class="loginFormInput">
-                  <input :type="showRegisterPassword ? 'text' : 'password'" placeholder="Please enter"
+                  <input :type="showRegisterPassword ? 'text' : 'password'" placeholder="Mot de passer"
                     v-model="registerForm.password" />
                   <div class="loginFormInputIcon" @click="showRegisterPassword = !showRegisterPassword">
-                    <!-- Eye icon placeholder -->
+                    <EyeOutlined v-if="showRegisterPassword" />
+                    <EyeInvisibleOutlined v-else />
                   </div>
                 </div>
               </div>
               <div class="loginFormGroup">
-                <label class="loginFormLabel">Password again</label>
+                <label class="loginFormLabel">{{ $t("KEY_LOGIN_TEXT16") }}</label>
                 <div class="loginFormInput">
-                  <input :type="showRegisterPasswordConfirm ? 'text' : 'password'" placeholder="Please enter"
+                  <input :type="showRegisterPasswordConfirm ? 'text' : 'password'" placeholder="Mot de passe"
                     v-model="registerForm.passwordConfirm" />
                   <div class="loginFormInputIcon" @click="showRegisterPasswordConfirm = !showRegisterPasswordConfirm">
-                    <!-- Eye icon placeholder -->
+                    <EyeOutlined v-if="showRegisterPasswordConfirm" />
+                    <EyeInvisibleOutlined v-else />
                   </div>
                 </div>
               </div>
@@ -134,10 +139,8 @@
             </form>
 
             <div class="loginRegisterLink" v-if="activeForm === 'login'">
-              Don't have an account? <span class="loginRegisterLinkText" @click="switchForm('register')">Register</span>
-            </div>
-            <div class="loginRegisterLink" v-else>
-              Already have an account? <span class="loginRegisterLinkText" @click="switchForm('login')">Login</span>
+              {{ $t("KEY_LOGIN_TEXT13") }} <span class="loginRegisterLinkText"
+                @click="switchForm('register')">Inscrivez-vous</span>
             </div>
           </div>
         </section>
@@ -147,7 +150,15 @@
 </template>
 
 <script setup>
+import { getAssetsFile } from "@/utils/getAssets"
+import { useUserStore } from "@/store/modules/user"
+
+const logo = getAssetsFile("logo2.png")
+const google = getAssetsFile("google.png")
 const activeForm = ref('login')
+
+const store = useUserStore()
+const router = useRouter()
 
 const loginForm = ref({
   email: '',
@@ -173,6 +184,10 @@ const switchForm = (form) => {
 const handleLogin = () => {
   // Implement login logic here
   console.log('Login with:', loginForm.value)
+  if (loginForm.value.email && loginForm.value.password) {
+    store.setIsLogin(true)
+    router.push("/upload")
+  }
 }
 
 const handleRegister = () => {
@@ -183,6 +198,7 @@ const handleRegister = () => {
 const handleGoogleLogin = () => {
   // Implement Google login
   console.log('Google login')
+  handleLogin()
 }
 
 const handleLinkedInLogin = () => {
@@ -228,11 +244,16 @@ const handleLinkedInLogin = () => {
           position: absolute;
           top: 0;
           left: 0;
+          border-radius: 12px 0 0 12px;
 
           .loginSidebarImagePlaceholder {
             width: 100%;
             height: 100%;
-            background-color: #1A4D8C;
+            background: url('../assets/images/login.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 12px 0 0 12px;
             /* Placeholder for the actual image */
           }
         }
@@ -245,6 +266,7 @@ const handleLinkedInLogin = () => {
           height: 100%;
           background-color: #1A4D8C;
           opacity: 0.8;
+          border-radius: 12px 0 0 12px;
         }
 
         .loginSidebarContent {
@@ -358,7 +380,7 @@ const handleLinkedInLogin = () => {
               justify-content: center;
 
               .loginNavGroup {
-                width: 73px;
+                width: fit-content;
                 height: 38px;
               }
 
@@ -435,8 +457,9 @@ const handleLinkedInLogin = () => {
                   transform: translateY(-50%);
                   width: 16px;
                   height: 16px;
-                  background-color: #ADAEBC;
-                  /* Placeholder for the eye icon */
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
                   cursor: pointer;
                 }
               }
@@ -508,6 +531,10 @@ const handleLinkedInLogin = () => {
               cursor: pointer;
               box-shadow: 0px 2px 4px 0px rgba(26, 77, 140, 0.1);
               margin-bottom: 48px;
+
+              &.loginFormSubmitActive {
+                background-color: #1A4D8C;
+              }
             }
 
             .loginFormDivider {
@@ -558,21 +585,13 @@ const handleLinkedInLogin = () => {
                     font-size: 16px;
                     line-height: 1em;
                     color: #1A4D8C;
+                    width: 200px;
+                    text-align: left;
                   }
 
                   .loginFormSocialIcon {
                     width: 18px;
                     height: 18px;
-
-                    &.loginFormSocialIconGoogle {
-                      background-color: #FBBC05;
-                      /* Placeholder for Google icon */
-                    }
-
-                    &.loginFormSocialIconLinkedin {
-                      background-color: #0B66C1;
-                      /* Placeholder for LinkedIn icon */
-                    }
                   }
                 }
               }

@@ -2,14 +2,14 @@
   <div class="scorePage">
     <div class="contentContainer">
       <div class="feedbackHeader">
-        <h1 class="feedbackTitle">Feedback Summary</h1>
-        <p class="feedbackDescription">Here's how you performed in this interview. Review your strengths and areas for
-          growth.</p>
+        <h1 class="feedbackTitle">Résumé du feedback</h1>
+        <p class="feedbackDescription">Voici votre performance lors de cet entretien. Consultez vos points forts et vos
+          axes d’amélioration.</p>
       </div>
 
       <div class="scoreCards">
         <div class="overallScoreCard">
-          <h2 class="scoreTitle">Overall Score</h2>
+          <h2 class="scoreTitle">Score global</h2>
           <div class="scoreCircle">
             <div ref="overallChart" class="chartContainer"></div>
             <div class="scoreValue">
@@ -18,19 +18,18 @@
             </div>
           </div>
           <div class="scoreMessage">
-            <span>Great job! Keep improving</span>
+            <span>Bravo ! Continuez à progresser.</span>
           </div>
         </div>
 
         <div class="scoreCardsGrid">
           <div class="categoryScoreCard">
             <div class="categoryHeader">
-              <div class="categoryIcon experienceIcon">
-                <div class="iconWrapper"></div>
+              <div class="categoryIcon">
+                <img :src="light" alt="">
               </div>
-              <h3 class="categoryTitle experienceTitle">Experience Clarity</h3>
+              <h3 class="categoryTitle experienceTitle">Clarté des expériences</h3>
             </div>
-            <div class="categoryDivider"></div>
             <div class="categoryScore">
               <div ref="experienceChart" class="chartContainer"></div>
               <span class="scoreNumberSmall experienceColor">91</span>
@@ -39,12 +38,11 @@
 
           <div class="categoryScoreCard">
             <div class="categoryHeader">
-              <div class="categoryIcon fitIcon">
-                <div class="iconWrapper"></div>
+              <div class="categoryIcon">
+                <img :src="favorite" alt="">
               </div>
-              <h3 class="categoryTitle fitTitle">Fit & Motivation</h3>
+              <h3 class="categoryTitle fitTitle">Adéquation & motivation</h3>
             </div>
-            <div class="categoryDivider"></div>
             <div class="categoryScore">
               <div ref="fitChart" class="chartContainer"></div>
               <span class="scoreNumberSmall fitColor">78</span>
@@ -53,12 +51,11 @@
 
           <div class="categoryScoreCard">
             <div class="categoryHeader">
-              <div class="categoryIcon technicalIcon">
-                <div class="iconWrapper"></div>
+              <div class="categoryIcon">
+                <img :src="dev" alt="">
               </div>
-              <h3 class="categoryTitle technicalTitle">Technical Strength</h3>
+              <h3 class="categoryTitle technicalTitle">Point fort technique</h3>
             </div>
-            <div class="categoryDivider"></div>
             <div class="categoryScore">
               <div ref="technicalChart" class="chartContainer"></div>
               <span class="scoreNumberSmall technicalColor">82</span>
@@ -67,12 +64,11 @@
 
           <div class="categoryScoreCard">
             <div class="categoryHeader">
-              <div class="categoryIcon communicationIcon">
-                <div class="iconWrapper"></div>
+              <div class="categoryIcon">
+                <img :src="chat" alt="">
               </div>
               <h3 class="categoryTitle communicationTitle">Communication</h3>
             </div>
-            <div class="categoryDivider"></div>
             <div class="categoryScore">
               <div ref="communicationChart" class="chartContainer"></div>
               <span class="scoreNumberSmall communicationColor">67</span>
@@ -82,11 +78,11 @@
       </div>
 
       <div class="actionButtons">
-        <button class="viewDetailsButton">
-          <span>View Details</span>
+        <button class="viewDetailsButton" @click="goDetail">
+          <span>Voir les détails</span>
         </button>
-        <button class="newInterviewButton">
-          <span>New Interview</span>
+        <button class="newInterviewButton" @click="goNewInterview">
+          <span>Nouvel entretien</span>
         </button>
       </div>
     </div>
@@ -94,7 +90,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { getAssetsFile } from "@/utils/getAssets"
 import * as echarts from 'echarts/core';
 import { GaugeChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
@@ -107,6 +103,7 @@ const experienceChart = ref(null);
 const fitChart = ref(null);
 const technicalChart = ref(null);
 const communicationChart = ref(null);
+
 
 // 分数数据
 const scores = {
@@ -227,6 +224,20 @@ onMounted(() => {
     initCategoryChart(communicationChart.value, scores.communication, colors.communication);
   }, 0);
 });
+
+const light = getAssetsFile("light.png", "score")
+const favorite = getAssetsFile("favorite.png", "score")
+const dev = getAssetsFile("dev.png", "score")
+const chat = getAssetsFile("chat.png", "score")
+
+const router = useRouter();
+
+function goDetail() {
+  router.push("/suggestions")
+}
+function goNewInterview() {
+  router.push("/dashboard")
+}
 </script>
 
 <style lang="scss" scoped>
@@ -339,7 +350,6 @@ onMounted(() => {
           position: absolute;
           bottom: 32px;
           left: 121px;
-          border-top: 1px solid #E5E7EB;
           padding-top: 12px;
 
           span {
@@ -373,35 +383,12 @@ onMounted(() => {
             left: 24px;
 
             .categoryIcon {
-              width: 20px;
+              width: 25px;
               height: 20px;
               display: flex;
               justify-content: center;
               align-items: center;
 
-              &.experienceIcon .iconWrapper {
-                width: 13.75px;
-                height: 20px;
-                background-color: #1A4D8C;
-              }
-
-              &.fitIcon .iconWrapper {
-                width: 20px;
-                height: 17.08px;
-                background-color: #17B0A7;
-              }
-
-              &.technicalIcon .iconWrapper {
-                width: 25px;
-                height: 20px;
-                background-color: #4F6FE5;
-              }
-
-              &.communicationIcon .iconWrapper {
-                width: 25px;
-                height: 20px;
-                background-color: #FF9D5C;
-              }
             }
 
             .categoryTitle {
@@ -426,15 +413,6 @@ onMounted(() => {
                 color: #FF9D5C;
               }
             }
-          }
-
-          .categoryDivider {
-            width: 204px;
-            height: 1px;
-            background-color: #E5E7EB;
-            position: absolute;
-            top: 60px;
-            left: 24px;
           }
 
           .categoryScore {
@@ -492,9 +470,11 @@ onMounted(() => {
       display: flex;
       gap: 24px;
       margin-bottom: 40px;
+      width: 100%;
+      justify-content: center;
 
       .viewDetailsButton {
-        width: 126px;
+        width: fit-content;
         height: 40px;
         background-color: #17B0A7;
         border: none;
@@ -513,7 +493,7 @@ onMounted(() => {
       }
 
       .newInterviewButton {
-        width: 141px;
+        width: fit-content;
         height: 40px;
         background-color: transparent;
         border: 1px solid #1A4D8C;

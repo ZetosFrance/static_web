@@ -2,18 +2,16 @@
   <div class="dashboardPage">
     <div class="contentContainer">
       <button class="inviteButton">
-        <div class="buttonIcon">
-          <div class="iconPlaceholder"></div>
-        </div>
-        <span>Invite Students</span>
+        <img :src="invite" alt="">
+        <span @click="goStudent">Invite Students</span>
       </button>
       <div class="topRow">
         <div class="statCard">
           <div class="cardHeader">
             <div class="iconCircle">
-              <div class="iconPlaceholder"></div>
+              <img :src="team" alt="team" />
             </div>
-            <h2 class="cardTitle">Total Students</h2>
+            <h2 class="cardTitle">{{ $t("KEY_DASHBOARD_TEXT11") }}</h2>
           </div>
           <div class="chartArea">
             <!-- Chart placeholder -->
@@ -30,7 +28,7 @@
         <div class="statCard">
           <div class="cardHeader">
             <div class="iconCircle">
-              <div class="iconPlaceholder"></div>
+              <img :src="chat" alt="chat" />
             </div>
             <h2 class="cardTitle">Total Interviews</h2>
           </div>
@@ -49,7 +47,7 @@
         <div class="statCard">
           <div class="cardHeader">
             <div class="iconCircle">
-              <div class="iconPlaceholder"></div>
+              <img :src="progress" alt="progress" />
             </div>
             <h2 class="cardTitle">Avg Score</h2>
           </div>
@@ -71,7 +69,7 @@
           </div>
         </div>
         <div class="chartContent">
-          <div ref="chartContainer" class="echartContainer"></div>
+
           <div class="chartLegend">
             <div class="legendItem">
               <div class="legendDot students"></div>
@@ -82,6 +80,8 @@
               <div class="legendText">Interviews</div>
             </div>
           </div>
+          <div ref="chartContainer" class="echartContainer"></div>
+
         </div>
       </div>
 
@@ -91,7 +91,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { getAssetsFile } from "@/utils/getAssets"
 import * as echarts from 'echarts/core';
 import { LineChart } from 'echarts/charts';
 import {
@@ -130,8 +130,8 @@ onMounted(() => {
       grid: {
         top: 40,
         right: 20,
-        bottom: 60,
-        left: 60,
+        bottom: 0,
+        left: 20,
         containLabel: true
       },
       xAxis: {
@@ -250,6 +250,18 @@ const handleResize = () => {
     chart.resize();
   }
 };
+
+
+const chat = getAssetsFile("chat.png", "dashboard")
+const progress = getAssetsFile("progress.png", "dashboard")
+const team = getAssetsFile("team.png", "dashboard")
+const invite = getAssetsFile("invite.png", "dashboard")
+
+const router = useRouter();
+
+function goStudent() {
+  router.push("/student")
+}
 </script>
 
 <style lang="scss" scoped>
@@ -288,19 +300,15 @@ const handleResize = () => {
           gap: 8px;
 
           .iconCircle {
-            width: 32px;
-            height: 32px;
-            background-color: #F7F9FC;
-            border-radius: 50%;
+            width: 28px;
+            height: 22px;
             display: flex;
             justify-content: center;
             align-items: center;
 
-            .iconPlaceholder {
-              width: 27.5px;
+            img {
               height: 22px;
-              background-color: #1A4D8C;
-              border-radius: 2px;
+              width: auto;
             }
           }
 
@@ -317,23 +325,11 @@ const handleResize = () => {
           position: absolute;
           top: 86px;
           right: 24px;
-          width: 121px;
-          height: 64px;
-          background-color: #D8D8D8;
-          border: 1.5px solid #17B0A7;
-          border-radius: 2px;
-          box-shadow: 0px 4px 9px rgba(33, 198, 180, 0.2);
-
-          &::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(23, 176, 167, 1), rgba(23, 176, 167, 0));
-            border-radius: 2px;
-          }
+          width: 141px;
+          height: 75px;
+          background: url("@/assets/images/dashboard/charts.png") no-repeat;
+          background-size: contain;
+          background-position: center;
         }
 
         .statInfo {
@@ -413,6 +409,11 @@ const handleResize = () => {
         margin-bottom: 25px;
 
         .chartTitles {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+
           .chartTitle {
             font-size: 20px;
             font-weight: 700;
@@ -490,21 +491,6 @@ const handleResize = () => {
       box-shadow: 0px 2px 4px rgba(26, 77, 140, 0.1);
       cursor: pointer;
       margin: 0 0 20px auto;
-
-      .buttonIcon {
-        width: 18px;
-        height: 14.4px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .iconPlaceholder {
-          width: 18px;
-          height: 14.4px;
-          background-color: #FFFFFF;
-          border-radius: 2px;
-        }
-      }
 
       span {
         font-size: 16px;

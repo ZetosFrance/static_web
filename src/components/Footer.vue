@@ -2,13 +2,30 @@
   <footer class="footer">
     <div class="footerContent">
       <div class="footerInfo">
-        <h4 class="footerLogo">Prepwise</h4>
-        <p class="footerCopyright">© 2025 Prepwise. All rights reserved.</p>
+        <h4 class="footerLogo">{{ $t("KEY_HEAD_TEXT1") }}</h4>
+        <p class="footerCopyright">{{ $t("KEY_HEAD_TEXT10") }}</p>
       </div>
-      <div class="footerSocial">
-        <div class="footerSocialIcon"></div>
-        <div class="footerSocialIcon"></div>
-        <div class="footerSocialIcon"></div>
+      <div class="footerSocial" v-if="router.currentRoute.value.path === '/'">
+        <div class="footerSocialIcon">
+          <LinkedinFilled style="font-size: 20px; color: #6B7B8F;" />
+        </div>
+        <div class="footerSocialIcon">
+          <TwitterOutlined style="font-size: 20px; color: #6B7B8F;" />
+        </div>
+        <div class="footerSocialIcon">
+          <InstagramOutlined style="font-size: 20px; color: #6B7B8F;" />
+        </div>
+      </div>
+      <div class="footerSocial" v-else>
+        <div class="item">
+          À propos
+        </div>
+        <div class="item">
+          Politique de confidentialité
+        </div>
+        <div class="item">
+          Contact
+        </div>
       </div>
     </div>
   </footer>
@@ -16,7 +33,7 @@
 </template>
 
 <script setup>
-// No script needed for the footer
+const router = useRouter()
 </script>
 
 <style lang="scss" scoped>
@@ -33,8 +50,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 120px;
     height: 100%;
+    width: 1200px;
+    margin: 0 auto;
 
     .footerInfo {
       display: flex;
@@ -65,9 +83,20 @@
       .footerSocialIcon {
         width: 20px;
         height: 20px;
-        background-color: #6B7B8F;
         /* Placeholder for social icons */
         border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .item {
+        font-family: Inter;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 14px;
+        letter-spacing: 0%;
+        vertical-align: middle;
+        color: #6B7B8F;
+        cursor: pointer;
       }
     }
   }

@@ -1,36 +1,86 @@
 <template>
   <div class="header">
-    <div class="headerLogo">
-      <div class="headerLogoIcon">
-        <div class="headerLogoIconRect"></div>
-        <div class="headerLogoIconShape"></div>
-        <div class="headerLogoIconInner"></div>
+    <div class="headerContainer">
+      <div class="headerLogo" @click="goHome">
+        <div class="headerLogoIcon">
+          <img :src="logo" alt="">
+        </div>
+        <div class="headerLogoText">Prepwise</div>
       </div>
-      <div class="headerLogoText">Prepwise</div>
+      <nav class="headerNav" v-if="!store.isLogin">
+        <div class="headerNavItem">
+          <span>Accueil</span>
+        </div>
+        <div class="headerNavItem">
+          <span>Avantages</span>
+        </div>
+        <div class="headerNavItem">
+          <span>Tarifs</span>
+        </div>
+        <div class="headerNavItem" @click="goLogin">
+          <span>Connexion</span>
+        </div>
+      </nav>
+      <div class="chatHead" v-else-if="router.currentRoute.value.path === '/chat'">
+        <div class="chatItem">
+          Simulation d'entretien
+        </div>
+        <div class="chatItem">
+          <ClockCircleOutlined />
+          <span>04 : 12</span>
+        </div>
+        <div class="chatBtn" @click="goFinish">
+          <ExclamationCircleFilled style="font-size: 18px; color: #fff;" />
+          Terminer l'entretien
+        </div>
+      </div>
+      <nav class="headerNav" v-else>
+        <div class="headerNavItem">
+          <span>Accueil</span>
+        </div>
+        <div class="headerNavItem">
+          <span>Fonctionnalités</span>
+        </div>
+        <div class="headerNavItem">
+          <span>Tarifs</span>
+        </div>
+        <div class="headerNavItem">
+          <span>Pour Admins</span>
+        </div>
+        <div class="headerNavItem">
+          <span>Aide</span>
+        </div>
+        <img :src="avatar" alt="" @click="logout">
+      </nav>
     </div>
-    <nav class="headerNav">
-      <div class="headerNavItem">
-        <span>How it works</span>
-      </div>
-      <div class="headerNavItem">
-        <span>Benefits</span>
-      </div>
-      <div class="headerNavItem">
-        <span>Pricing</span>
-      </div>
-      <div class="headerNavItem" @click="goLogin">
-        <span>Login</span>
-      </div>
-    </nav>
   </div>
   <div class="headerContent"></div>
 </template>
 
 <script setup>
-const router = useRouter()
+import { getAssetsFile } from "@/utils/getAssets"
+import { useUserStore } from "@/store/modules/user"
 
+const router = useRouter()
+const store = useUserStore()
 function goLogin() {
   router.push("/login")
+}
+
+function goHome() {
+  router.push("/")
+}
+
+const logo = getAssetsFile("logo2.png")
+const avatar = getAssetsFile("avatar.png")
+
+function logout() {
+  store.setIsLogin(false)
+  router.push("/login")
+}
+
+function goFinish() {
+  router.push("/interviewFinish")
 }
 </script>
 
@@ -46,45 +96,32 @@ function goLogin() {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 120px;
   box-sizing: border-box;
   z-index: 10;
+
+  .headerContainer {
+    width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
   .headerLogo {
     display: flex;
     align-items: center;
     gap: 8px;
+    cursor: pointer;
 
     .headerLogoIcon {
-      width: 23.74px;
-      height: 28px;
+      width: 34px;
+      height: 30px;
       position: relative;
-
-      .headerLogoIconRect {
-        position: absolute;
-        width: 12.78px;
-        height: 28px;
-        background-color: #1A4D8C;
-        opacity: 0.4;
-      }
-
-      .headerLogoIconShape {
-        position: absolute;
-        width: 17.65px;
-        height: 22.52px;
-        background-color: #1A4D8C;
-        top: 1.22px;
-        left: 6.09px;
-      }
-
-      .headerLogoIconInner {
-        position: absolute;
-        width: 9.74px;
-        height: 6.7px;
-        background-color: #1A4D8C;
-        top: 4.87px;
-        left: 6.09px;
-      }
+      // background-color: #1A4D8C;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
     }
 
     .headerLogoText {
@@ -101,6 +138,14 @@ function goLogin() {
     align-items: center;
     gap: 16px;
 
+    img {
+      width: 33px;
+      height: 33px;
+      border-radius: 50%;
+      margin-left: 100px;
+      cursor: pointer;
+    }
+
     .headerNavItem {
       display: flex;
       justify-content: center;
@@ -114,6 +159,39 @@ function goLogin() {
         line-height: 1em;
         color: #1F2D3D;
       }
+    }
+  }
+
+  .chatHead {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .chatItem {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      color: #1A4D8C;
+
+      span {
+        font-weight: bold;
+        margin-left: 8px;
+      }
+    }
+
+    .chatBtn {
+      border-radius: 40px;
+      height: 40px;
+      background-color: #1A4D8C;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      line-height: 18px;
+      cursor: pointer;
+      color: #fff;
+      padding: 0 16px;
+      gap: 8px;
     }
   }
 }

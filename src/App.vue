@@ -1,15 +1,14 @@
 <template>
   <div class="App">
-    <el-config-provider :locale="locale">
+    <a-config-provider :locale="locale">
       <router-view />
-    </el-config-provider>
+    </a-config-provider>
   </div>
 </template>
 
 <script setup>
-import { ElConfigProvider } from "element-plus"
-import frFR from "element-plus/es/locale/lang/fr"
-import enUS from "element-plus/es/locale/lang/en"
+import enUS from 'ant-design-vue/es/locale/en_US';
+import frFR from 'ant-design-vue/es/locale/fr_FR';
 /**
  *@App
 */

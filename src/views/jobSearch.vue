@@ -3,39 +3,43 @@
     <div class="section">
       <div class="frame86">
         <div class="frame85">
-          <h1 class="title">What position are you applying for?</h1>
+          <h1 class="title">Pour quel poste postulez-vous ?</h1>
           <p class="subtitle">
-            Select your job role to tailor your interview simulation. Start typing or pick a popular one below.
+            Sélectionnez votre poste pour personnaliser votre simulation d’entretien. Commencez à taper ou choisissez
+            parmi les plus populaires ci-dessous.
           </p>
         </div>
         <div class="inputContainer">
           <div class="input">
             <input type="text" placeholder="e.g. Product Manager" />
           </div>
-          <div class="searchIcon">
-            <div class="iconPlaceholder"></div>
-          </div>
+          <a-tooltip title="Vous n’avez pas téléchargé de description de poste avec votre CV et lettre de motivation."
+            placement="bottom">
+            <div class="searchIcon">
+              <div class="iconPlaceholder"></div>
+            </div>
+          </a-tooltip>
         </div>
         <div class="iconCircle">
           <!-- Teal circle with icon placeholder -->
           <div class="iconPlaceholder"></div>
         </div>
         <div class="jobButtons">
-          <div class="buttonRow" v-for="(row, rowIndex) in jobRoles" :key="rowIndex">
-            <button v-for="(job, index) in row" :key="index" class="roleButton"
-              :class="{ active: selectedJobs.includes(job) }" @click="toggleJobSelection(job)">
+          <div class="buttonRow">
+            <button class="roleButton" v-for="(job, index) in jobRoles" :key="index"
+              :class="{ active: selectedJobs === index }" @click="toggleJobSelection(index)">
               <div class="buttonIcon">
-                <div class="iconPlaceholder"></div>
+                <img :src="job.icon" alt="">
               </div>
-              <span>{{ job }}</span>
+              <span>{{ job.name }}</span>
             </button>
           </div>
         </div>
       </div>
-      <button class="nextButton">
-        <span>Next</span>
+      <button class="nextButton" :class="{ active: selectedJobs !== -1 }" @click="goChat">
+        <span>Suivant</span>
         <div class="arrowIcon">
-          <div class="iconPlaceholder"></div>
+          <ArrowRightOutlined />
         </div>
       </button>
     </div>
@@ -43,26 +47,38 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { getAssetsFile } from "@/utils/getAssets";
 
-// Job roles data organized by rows
+const circle = getAssetsFile("circle.png", "job")
+const pie = getAssetsFile("pie.png", "job")
+const pm = getAssetsFile("pm.png", "job")
+const dev = getAssetsFile("dev.png", "job")
+const sound = getAssetsFile("sound.png", "job")
+
 const jobRoles = ref([
-  ['Audit Intern', 'Financial Analyst', 'Product Manager'],
-  ['Software Engineer', 'Marketing Associate']
-]);
+  { icon: circle, name: "Audit Intern" },
+  { icon: pie, name: "Financial Analyst" },
+  { icon: pm, name: "Product Manager" },
+  { icon: dev, name: "Software Engineer" },
+  { icon: sound, name: "Marketing Associate" }
+])
+
 
 // Track selected jobs
-const selectedJobs = ref([]);
+const selectedJobs = ref(-1);
 
 // Toggle job selection
 const toggleJobSelection = (job) => {
-  const index = selectedJobs.value.indexOf(job);
-  if (index === -1) {
-    selectedJobs.value.push(job);
-  } else {
-    selectedJobs.value.splice(index, 1);
-  }
+  selectedJobs.value === job ? selectedJobs.value = -1 : selectedJobs.value = job;
 };
+
+const router = useRouter()
+
+function goChat() {
+  if (selectedJobs.value !== -1) {
+    router.push("/chat")
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -169,8 +185,8 @@ const toggleJobSelection = (job) => {
           .iconPlaceholder {
             width: 20px;
             height: 20px;
-            background-color: #6B7B8F;
-            border-radius: 2px;
+            background: url("@/assets/images/job/question.png") no-repeat;
+            background-size: cover;
           }
         }
       }
@@ -182,18 +198,8 @@ const toggleJobSelection = (job) => {
         transform: translateX(-50%);
         width: 40px;
         height: 40px;
-        background-color: #17B0A7;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .iconPlaceholder {
-          width: 24px;
-          height: 24px;
-          background-color: #FFFFFF;
-          border-radius: 2px;
-        }
+        background: url("@/assets/images/job/job.png") no-repeat;
+        background-size: contain;
       }
 
       .jobButtons {
@@ -205,7 +211,9 @@ const toggleJobSelection = (job) => {
         .buttonRow {
           display: flex;
           align-items: center;
+          flex-wrap: wrap;
           gap: 12px;
+          width: 508px;
 
           .roleButton {
             height: 40px;
@@ -266,6 +274,10 @@ const toggleJobSelection = (job) => {
       align-items: center;
       gap: 8px;
 
+      &.active {
+        background-color: #1A4D8C;
+      }
+
       span {
         color: #FFFFFF;
         font-size: 16px;
@@ -283,7 +295,6 @@ const toggleJobSelection = (job) => {
         .iconPlaceholder {
           width: 18px;
           height: 12px;
-          background-color: #FFFFFF;
           border-radius: 2px;
         }
       }
