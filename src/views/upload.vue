@@ -176,7 +176,8 @@ function gouploadlist() {
     background-color: #FFFFFF;
     border-radius: 8px;
     box-shadow: 0px 4px 16px 0px rgba(26, 77, 140, 0.08);
-    overflow: hidden;
+    overflow-y: auto;
+    height: 100%;
 
     .uploadHeader {
       height: 84px;

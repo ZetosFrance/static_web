@@ -27,7 +27,7 @@
         </div>
         <div class="chatItem">
           <ClockCircleOutlined />
-          <span>04 : 12</span>
+          <span>{{ CountDowntime }}</span>
         </div>
         <div class="chatBtn" @click="goFinish">
           <ExclamationCircleFilled style="font-size: 18px; color: #fff;" />
@@ -82,6 +82,40 @@ function logout() {
 function goFinish() {
   router.push("/interviewFinish")
 }
+
+const CountDowntime = ref()
+
+function startCountdown(durationInSeconds, onTick, onComplete) {
+  const endTime = Date.now() + durationInSeconds * 1000;
+  let lastDisplayed = '';
+
+  function update() {
+    const now = Date.now();
+    let remaining = Math.max(0, Math.floor((endTime - now) / 1000));
+
+    const minutes = String(Math.floor(remaining / 60)).padStart(2, '0');
+    const seconds = String(remaining % 60).padStart(2, '0');
+    const current = `${minutes}:${seconds}`;
+    if (current !== lastDisplayed) {
+      onTick(current);
+      lastDisplayed = current;
+    }
+
+    if (remaining > 0) {
+      requestAnimationFrame(update);
+    } else {
+      onComplete && onComplete();
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
+startCountdown(300, (time) => {
+  CountDowntime.value = time
+}, () => {
+  CountDowntime.value = "00:00";
+})
 </script>
 
 <style lang="scss" scoped>
