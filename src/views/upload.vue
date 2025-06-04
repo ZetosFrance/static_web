@@ -46,7 +46,7 @@
             </div>
             <div class="uploadDropzoneText">
               <div class="uploadDropzoneTitle">Glisser-déposer pour télécharger</div>
-              <div class="uploadDropzoneSubtitle">ou parcourir les fichiers (PDF, DOCX)</div>
+              <div class="uploadDropzoneSubtitle">ou <span>parcourir les fichiers</span> (PDF, DOCX)</div>
             </div>
           </div>
         </div>
@@ -74,29 +74,22 @@
 </template>
 
 <script setup>
-import { FileTextOutlined, CloseOutlined } from '@ant-design/icons-vue';
-
-// File management
 const fileInput = ref(null);
 const fileList = ref([]);
 const isDragging = ref(false);
 
-// Trigger file input when dropzone is clicked
 const triggerFileInput = () => {
   fileInput.value.click();
 };
 
-// Handle file selection from input
 const handleFileUpload = (event) => {
   const files = event.target.files;
   if (files.length) {
     uploadFiles(files);
   }
-  // Reset input to allow selecting the same file again
   event.target.value = '';
 };
 
-// Handle drag events
 const onDragOver = () => {
   isDragging.value = true;
 };
@@ -113,10 +106,8 @@ const onDrop = (event) => {
   }
 };
 
-// Upload files with progress simulation
 const uploadFiles = (files) => {
   Array.from(files).forEach(file => {
-    // Add file to list with initial progress
     const fileObj = {
       name: file.name,
       size: file.size,
@@ -129,12 +120,10 @@ const uploadFiles = (files) => {
     fileList.value.push(fileObj);
     const fileIndex = fileList.value.length - 1;
 
-    // Simulate upload progress
     simulateUploadProgress(fileIndex);
   });
 };
 
-// Simulate file upload progress
 const simulateUploadProgress = (fileIndex) => {
   let progress = 0;
   const interval = setInterval(() => {
@@ -142,7 +131,6 @@ const simulateUploadProgress = (fileIndex) => {
     if (progress >= 100) {
       progress = 100;
       clearInterval(interval);
-      // Mark upload as complete after a short delay
       setTimeout(() => {
         if (fileList.value[fileIndex]) {
           fileList.value[fileIndex].uploading = false;
@@ -159,7 +147,6 @@ const simulateUploadProgress = (fileIndex) => {
   }, 300);
 };
 
-// Remove file from list
 const removeFile = (index) => {
   fileList.value.splice(index, 1);
 };
@@ -328,6 +315,11 @@ function gouploadlist() {
               font-size: 12px;
               line-height: 1.17em;
               color: #000000;
+
+              span {
+                color: #17B0A7;
+                text-decoration: underline;
+              }
             }
           }
         }

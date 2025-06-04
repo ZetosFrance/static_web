@@ -102,7 +102,6 @@ import {
 } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 
-// Register necessary ECharts components
 echarts.use([
   LineChart,
   GridComponent,
@@ -115,17 +114,14 @@ echarts.use([
 const chartContainer = ref(null);
 let chart = null;
 
-// Chart data
 const days = ['Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed'];
 const studentsData = [120, 82, 89, 69, 0, 34, 17];
 const interviewsData = [130, 89, 111, 68, 0, 33, 17];
 
 onMounted(() => {
-  // Initialize chart
   if (chartContainer.value) {
     chart = echarts.init(chartContainer.value);
 
-    // Set chart options
     const option = {
       grid: {
         top: 40,
@@ -228,16 +224,13 @@ onMounted(() => {
       ]
     };
 
-    // Apply options to chart
     chart.setOption(option);
 
-    // Handle window resize
     window.addEventListener('resize', handleResize);
   }
 });
 
 onUnmounted(() => {
-  // Clean up
   if (chart) {
     chart.dispose();
     chart = null;

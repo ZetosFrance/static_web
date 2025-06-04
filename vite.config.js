@@ -28,5 +28,8 @@ export default () => {
         ],
       }),
     ],
+    esbuild: {
+      pure: ["console.log"],
+    },
   })
 }

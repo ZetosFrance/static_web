@@ -274,8 +274,7 @@ const ruler = getAssetsFile("ruler.png", "letter")
 const upload = getAssetsFile("upload.png", "letter")
 const reload = getAssetsFile("reload.png", "letter")
 
-// State to track active tab
-const activeTab = ref('letter'); // Default to 'letter' tab
+const activeTab = ref('letter');
 
 const router = useRouter()
 

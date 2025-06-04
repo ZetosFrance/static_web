@@ -43,7 +43,7 @@
               <img v-if="record.score === 83" :src="greenprogress" class="progressImage" alt="Green progress" />
               <img v-if="record.score === 65" :src="orangeprogress" class="progressImage" alt="Orange progress" />
               <span :class="['scoreValue', record.score === 83 ? 'greenScore' : 'orangeScore']">{{ record.score
-              }}</span>
+                }}</span>
 
             </div>
           </template>
@@ -63,7 +63,6 @@ const flash = getAssetsFile("flash.png")
 const orangeprogress = getAssetsFile("orangeprogress.png")
 const greenprogress = getAssetsFile("greenprogress.png")
 
-// Table columns definition
 const columns = [
   {
     title: 'Date',

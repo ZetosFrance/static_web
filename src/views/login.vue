@@ -69,8 +69,8 @@
                 </label>
                 <span class="loginFormForgot">{{ $t("KEY_LOGIN_TEXT8") }}</span>
               </div>
-              <button type="submit" class="loginFormSubmit"
-                :class="{ 'loginFormSubmitActive': loginForm.email && loginForm.password }" @click="handleLogin">Se
+              <button type="submit" class="loginFormSubmit" :class="{ 'loginFormSubmitActive': loginForm.email }"
+                @click="handleLogin">Se
                 connecter</button>
               <div class="loginFormDivider">
                 <div class="loginFormDividerLine"></div>
@@ -161,7 +161,7 @@ const store = useUserStore()
 const router = useRouter()
 
 const loginForm = ref({
-  email: '',
+  email: 'student@zetos.fr',
   password: '',
   rememberMe: false
 })
@@ -184,7 +184,7 @@ const switchForm = (form) => {
 const handleLogin = () => {
   // Implement login logic here
   console.log('Login with:', loginForm.value)
-  if (loginForm.value.email && loginForm.value.password) {
+  if (loginForm.value.email) {
     store.setIsLogin(true)
     router.push("/upload")
   }
@@ -441,8 +441,8 @@ const handleLinkedInLogin = () => {
                   font-family: 'Inter', sans-serif;
                   font-weight: 400;
                   font-size: 16px;
-                  line-height: 1.5em;
-                  color: #000000;
+                  line-height: 24px;
+                  color: #ADAEBC;
                   padding: 0 4px;
 
                   &::placeholder {

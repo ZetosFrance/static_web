@@ -64,10 +64,8 @@ const jobRoles = ref([
 ])
 
 
-// Track selected jobs
 const selectedJobs = ref(-1);
 
-// Toggle job selection
 const toggleJobSelection = (job) => {
   selectedJobs.value === job ? selectedJobs.value = -1 : selectedJobs.value = job;
 };
